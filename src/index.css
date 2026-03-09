@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Cormorant Garamond", serif;
+  
+  --color-earth-bg: #F5F5F0;
+  --color-earth-ink: #1A1A1A;
+  --color-earth-accent: #233652;
+  --color-earth-primary: #233652;
+  --color-earth-muted: #8C8C82;
+  --color-earth-card: #FFFFFF;
+}
+
+@layer base {
+  body {
+    @apply bg-earth-bg text-earth-ink font-sans antialiased;
+  }
+  
+  h1, h2, h3 {
+    @apply font-serif;
+  }
+}
+
+.page-transition {
+  @apply fixed inset-0 w-full h-full overflow-y-auto pb-24;
+}
+
+/* Custom scrollbar for a cleaner look */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #D1D1CB;
+  border-radius: 10px;
+}
