@@ -184,6 +184,7 @@ export default function App() {
             <DetailPage 
               key="coaching"
               title="Coaching"
+              imageUrl="https://raw.githubusercontent.com/Detaalvan/detaalvan-app/main/Sjoerd4.png"
               icon={<Brain />}
               content="Iedereen heeft een autopilot. Niet iedereen ervaart regie. Word bij DeTaalVan meester over je innerlijk dialoog — met hoofd, hart en lijf. Minder reageren, meer kiezen. Zodat je keuzes maakt die écht van jou zijn. Gemiddeld 4 sessies. Vaak vergoed door je werkgever."
               onBack={goBack}
