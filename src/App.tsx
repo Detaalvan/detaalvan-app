@@ -56,10 +56,11 @@ const DetailPage: React.FC<{
   onBack: () => void; 
   icon?: React.ReactNode;
   imageUrl?: string;
+  imageStyle?: React.CSSProperties;
   bannerUrl?: string;
   ctaText?: string;
   ctaLink?: string;
-}> = ({ title, subtitle, content, onBack, icon, imageUrl, bannerUrl, ctaText = "Meer info / Aanvragen", ctaLink = "https://www.detaalvan.nl/contact" }) => (
+}> = ({ title, subtitle, content, onBack, icon, imageUrl, imageStyle, bannerUrl, ctaText = "Meer info / Aanvragen", ctaLink = "https://www.detaalvan.nl/contact" }) => (
   <motion.div
     initial={{ x: '100%' }}
     animate={{ x: 0 }}
@@ -77,11 +78,12 @@ const DetailPage: React.FC<{
 
     <div className="flex flex-col items-center text-center gap-6 mt-4">
       {imageUrl && (
-        <div className="w-[180px] h-[180px] rounded-full overflow-hidden shadow-md border-4 border-white">
+        <div className="w-44 h-44 rounded-full overflow-hidden shadow-md border-4 border-white">
           <img 
             src={imageUrl} 
             alt={title} 
-            className="w-full h-full object-cover object-top"
+            className="w-full h-full object-cover"
+            style={imageStyle || { objectPosition: 'center 5%' }}
             referrerPolicy="no-referrer"
           />
         </div>
@@ -341,7 +343,8 @@ export default function App() {
               key="about"
               title="Over Sjoerd Kersten"
               subtitle="Specialist in innerlijk dialoog en regie."
-              imageUrl="https://raw.githubusercontent.com/Detaalvan/detaalvan-app/main/Sjoerd8.png"
+              imageUrl="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=13;908;2891;841,width=960,height=1280/image/404499409/3473e8e5-c864-4275-804c-e3514e40ced0.jpg"
+              imageStyle={{ objectPosition: 'center 5%' }}
               content="Sjoerd Kersten is psychomotorisch therapeut, coach en trainer met duizenden uren ervaring. Hij werkt met professionals, teams en organisaties aan één centrale vraag: wie stuurt jou, and wanneer stuur jij zelf? Met een achtergrond in de ziekenhuis psychiatrie en 8 jaar als ondernemer combineert Sjoerd Kersten psychomotorische therapie, biofeedback en de IOM-methode tot een aanpak die lichaam, hoofd en hart samenbrengt. Direct, holistisch and gericht op blijvende verandering."
               onBack={goBack}
               ctaText="Meer over Sjoerd Kersten"
