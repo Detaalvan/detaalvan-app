@@ -17,7 +17,8 @@ import {
   Globe,
   Instagram,
   Linkedin,
-  MessageCircle
+  MessageCircle,
+  Calendar
 } from 'lucide-react';
 
 // --- Types ---
@@ -60,7 +61,8 @@ const DetailPage: React.FC<{
   bannerUrl?: string;
   ctaText?: string;
   ctaLink?: string;
-}> = ({ title, subtitle, content, onBack, icon, imageUrl, imageStyle, bannerUrl, ctaText = "Meer info / Aanvragen", ctaLink = "https://www.detaalvan.nl/contact" }) => (
+  onCtaClick?: () => void;
+}> = ({ title, subtitle, content, onBack, icon, imageUrl, imageStyle, bannerUrl, ctaText = "Meer info / Aanvragen", ctaLink = "https://www.detaalvan.nl/contact", onCtaClick }) => (
   <motion.div
     initial={{ x: '100%' }}
     animate={{ x: 0 }}
@@ -119,17 +121,58 @@ const DetailPage: React.FC<{
         {content}
       </p>
       
-      <a 
-        href={ctaLink}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-8 bg-earth-accent text-white px-8 py-4 rounded-full font-medium flex items-center gap-2 shadow-lg hover:bg-opacity-90 transition-all active:scale-95"
-      >
-        {ctaText}
-        <ArrowRight size={18} />
-      </a>
+      {onCtaClick ? (
+        <button 
+          onClick={onCtaClick}
+          className="mt-8 bg-earth-accent text-white px-8 py-4 rounded-full font-medium flex items-center gap-2 shadow-lg hover:bg-opacity-90 transition-all active:scale-95"
+        >
+          {ctaText}
+          <ArrowRight size={18} />
+        </button>
+      ) : (
+        <a 
+          href={ctaLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-8 bg-earth-accent text-white px-8 py-4 rounded-full font-medium flex items-center gap-2 shadow-lg hover:bg-opacity-90 transition-all active:scale-95"
+        >
+          {ctaText}
+          <ArrowRight size={18} />
+        </a>
+      )}
     </div>
   </motion.div>
+);
+
+const GoogleReviewBadge: React.FC = () => (
+  <a 
+    href="https://www.google.com/maps/search/DeTaalVan+Lelystad"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="bg-white px-5 py-3 rounded-2xl shadow-sm border border-black/5 flex items-center gap-4 mx-auto w-fit hover:shadow-md transition-all active:scale-95"
+  >
+    <div className="text-2xl font-bold text-earth-ink leading-none">4.6</div>
+    <div className="flex flex-col justify-center">
+      <div className="flex text-[#FBBC05] text-sm mb-0.5">
+        <span>★</span><span>★</span><span>★</span><span>★</span>
+        <div className="relative">
+          <span className="text-gray-200">★</span>
+          <span className="absolute top-0 left-0 w-[50%] overflow-hidden">★</span>
+        </div>
+      </div>
+      <div className="text-[10px] text-earth-muted leading-none">
+        8 reviews · Beoordeeld op
+      </div>
+    </div>
+    <div className="flex font-bold text-lg tracking-tighter leading-none">
+      <span className="text-[#4285F4]">G</span>
+      <span className="text-[#EA4335]">o</span>
+      <span className="text-[#FBBC05]">o</span>
+      <span className="text-[#4285F4]">g</span>
+      <span className="text-[#34A853]">l</span>
+      <span className="text-[#EA4335]">e</span>
+    </div>
+  </a>
 );
 
 export default function App() {
@@ -170,8 +213,9 @@ export default function App() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <h1 className="text-4xl font-serif text-earth-primary mb-2">DeTaalVan</h1>
-          <p className="text-earth-muted text-sm italic">Wij maken zichtbaar wat anderen missen.</p>
+          <h1 className="text-4xl font-serif text-earth-primary mb-1">Sjoerd Kersten</h1>
+          <p className="text-earth-muted text-sm italic">Ik maak zichtbaar wat anderen missen.</p>
+          <p className="text-[10px] text-earth-muted/60 mt-1 uppercase tracking-widest">DeTaalVan</p>
         </motion.div>
       </header>
 
@@ -192,8 +236,7 @@ export default function App() {
                 className="w-full h-auto max-h-[320px] object-contain bg-[#F5F0EB] rounded-2xl shadow-sm"
                 referrerPolicy="no-referrer"
               />
-              <div className="text-center space-y-2">
-                <p className="text-lg font-medium text-earth-ink">Welkom bij DeTaalVan</p>
+              <div className="text-center">
                 <p className="text-sm text-earth-muted">Psychomotorische therapie, coaching en teamtraining. Kies een onderwerp om meer te lezen.</p>
               </div>
 
@@ -205,6 +248,10 @@ export default function App() {
                 <Tile id="reviews" icon={<Star />} label="Reviews" onClick={navigateTo} />
                 <Tile id="about" icon={<Info />} label="Over Sjoerd" onClick={navigateTo} />
               </div>
+
+              <div className="pt-4">
+                <GoogleReviewBadge />
+              </div>
             </motion.div>
           )}
 
@@ -214,9 +261,9 @@ export default function App() {
               title="Coaching"
               icon={<Brain />}
               imageUrl="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=0;0;0;0,width=925,height=1280/image/543441174/67f7b35e-a5dc-4235-b0c9-012b8584ac1b.png"
-              content="Iedereen heeft een autopilot. Niet iedereen ervaart regie. Wordt bij DeTaalVan meester over je innerlijke dialoog, met hoofd, hart en lijf. Zodat je keuzes maakt die écht van jou zijn."
+              content="Iedereen heeft een autopilot. Niet iedereen ervaart regie. Wordt bij DeTaalVan meester over je innerlijke dialoog. Met hoofd, hart en lijf. Zodat je keuzes maakt die écht van jou zijn."
               onBack={goBack}
-              ctaLink="mailto:info@detaalvan.nl"
+              onCtaClick={() => navigateTo('contact')}
             />
           )}
 
@@ -226,56 +273,64 @@ export default function App() {
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              className="page-transition bg-earth-bg p-6"
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="page-transition bg-earth-bg z-10 p-6"
             >
-              <button onClick={goBack} className="flex items-center gap-2 text-earth-muted mb-8">
+              <button 
+                onClick={goBack}
+                className="flex items-center gap-2 text-earth-muted mb-8 hover:text-earth-accent transition-colors"
+              >
                 <ChevronLeft size={20} />
                 <span>Terug</span>
               </button>
+
               <div className="text-center mb-8 space-y-2">
                 <h2 className="text-3xl font-serif text-earth-accent">Teamtraining</h2>
                 <p className="text-lg text-earth-ink font-medium">Elk team heeft een eigen taal. Wij helpen jullie die vinden.</p>
-                <p className="text-xs text-earth-muted italic">Alle trainingen verzorgen wij samen met Marvin Levant van OutsidetheBoks Academy.</p>
+                <p className="text-xs text-earth-muted italic">
+                  Alle trainingen zijn op maat en verzorg ik samen met Marvin Levant van{' '}
+                  <a 
+                    href="https://www.outsidetheboksacademy.nl/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="underline text-[#233652]"
+                  >
+                    OutsidetheBoks Academy
+                  </a>.
+                </p>
               </div>
-              <div className="flex flex-col gap-4">
-                <Tile id="teamtraining-tweedaagse" icon={<Users />} label="Tweedaagse" subtitle="Twee sessies. Eén doorlopende ervaring." onClick={navigateTo} />
-                <Tile id="teamtraining-losse-sessie" icon={<Users />} label="Losse sessie" subtitle="Drie uur. Direct effect." onClick={navigateTo} />
-                <Tile id="teamtraining-traject-op-maat" icon={<Users />} label="Traject op maat" subtitle="Van inzicht naar duurzame gedragsverandering." onClick={navigateTo} />
+
+              <div className="space-y-4 mb-10">
+                {[
+                  {
+                    title: "Communicatie Training",
+                    description: "Effectiever samenwerken door bewust te regisseren in communicatie."
+                  },
+                  {
+                    title: "Teamdynamiek & Samenwerking",
+                    description: "Inzicht in teamdynamiek, boksen als metafoor voor communicatie, teambuilding. Sterker team, meer begrip, betere samenwerking."
+                  },
+                  {
+                    title: "Sales Training",
+                    description: "Krachtige salestrainingen rond actuele thema's zoals klantgerichtheid, onderhandelingstechnieken, communicatie, samenwerking en persoonlijk leiderschap."
+                  }
+                ].map((item, index) => (
+                  <div key={index} className="bg-white p-5 rounded-2xl shadow-sm border border-black/5">
+                    <h3 className="font-bold text-earth-ink mb-1">{item.title}</h3>
+                    <p className="text-sm text-earth-ink/80">{item.description}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex justify-center">
+                <button 
+                  onClick={() => navigateTo('contact')}
+                  className="w-full max-w-xs bg-earth-primary text-white px-6 py-4 rounded-full font-medium text-center shadow-lg hover:shadow-xl transition-all active:scale-95"
+                >
+                  Meer info / Aanvragen
+                </button>
               </div>
             </motion.div>
-          )}
-
-          {currentPage === 'teamtraining-tweedaagse' && (
-            <DetailPage 
-              key="teamtraining-tweedaagse"
-              title="Tweedaagse"
-              icon={<Users />}
-              content="Dag 1: bewegen, ontdekken en reflecteren — met boksen en de IOM-methode als basis. Dag 2 vormt zich vanuit dag 1: verdieping door video- en foto-analyse, en de thema's die jouw team zelf aandraagt. Geen theorielessen met powerpoints. Wel een ervaring die blijft."
-              onBack={goBack}
-              ctaLink="mailto:info@detaalvan.nl"
-            />
-          )}
-
-          {currentPage === 'teamtraining-losse-sessie' && (
-            <DetailPage 
-              key="teamtraining-losse-sessie"
-              title="Losse sessie"
-              icon={<Users />}
-              content="Boksen als vertrekpunt voor communicatie, verbinding en teamdynamiek. In drie uur leert je team de eigen communicatiestijl herkennen en effectief inzetten in interacties, versterkt de onderlinge dynamiek en krijgen leidinggevenden concrete handvatten. Ervaringsgericht, direct toepasbaar op de werkvloer."
-              onBack={goBack}
-              ctaLink="mailto:info@detaalvan.nl"
-            />
-          )}
-
-          {currentPage === 'teamtraining-traject-op-maat' && (
-            <DetailPage 
-              key="teamtraining-traject-op-maat"
-              title="Traject op maat"
-              icon={<Users />}
-              content="Sommige teams hebben meer nodig dan één of twee dagen. In een traject op maat werken we stap voor stap van inzicht naar overzicht naar regie — met boksen, IOM-methode en video-analyse als vaste kern. De thematiek bepaal jij: sales, communicatie, leiderschap of teamdynamiek. Het resultaat is concreet, direct en blijvend."
-              onBack={goBack}
-              ctaLink="mailto:info@detaalvan.nl"
-            />
           )}
 
           {currentPage === 'burnout' && (
@@ -286,7 +341,7 @@ export default function App() {
               icon={<Flame />}
               content="Gejaagd. Grenzen kwijt. Het gevoel dat je jezelf een beetje bent verloren. Bij DeTaalVan beginnen we bij het lichaam, want daar begint herstel echt. Van regulatie naar inzicht, van inzicht naar regie. Stap voor stap, afgestemd op jouw situatie."
               onBack={goBack}
-              ctaLink="mailto:info@detaalvan.nl"
+              onCtaClick={() => navigateTo('contact')}
             />
           )}
 
@@ -306,6 +361,11 @@ export default function App() {
                 <h2 className="text-3xl font-serif text-earth-accent">Reviews</h2>
                 <p className="text-earth-muted text-sm italic">Wat anderen zeggen.</p>
               </div>
+
+              <div className="mb-8">
+                <GoogleReviewBadge />
+              </div>
+
               <div className="space-y-6 mb-12">
                 {[
                   "De coaching heeft mij meer rust en vertrouwen gegeven, waardoor ik sterker in mijn schoenen sta en de regie weer in handen voel te hebben.",
@@ -404,7 +464,7 @@ export default function App() {
                 </a>
 
                 <a 
-                  href="https://www.detaalvan.nl/contact/"
+                  href="https://www.detaalvan.nl"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-white p-5 rounded-2xl shadow-sm border border-black/5 flex items-center gap-4 transition-all hover:shadow-md active:scale-[0.98]"
@@ -412,7 +472,19 @@ export default function App() {
                   <div className="text-earth-ink">
                     <Globe size={24} />
                   </div>
-                  <span className="font-medium text-earth-ink">Contactformulier</span>
+                  <span className="font-medium text-earth-ink">Website</span>
+                </a>
+
+                <a 
+                  href="https://calendar.app.google/mP7A8NF3ZFPoC9hFA"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white p-5 rounded-2xl shadow-sm border border-black/5 flex items-center gap-4 transition-all hover:shadow-md active:scale-[0.98]"
+                >
+                  <div className="text-earth-ink">
+                    <Calendar size={24} />
+                  </div>
+                  <span className="font-medium text-earth-ink">Boekingen</span>
                 </a>
               </div>
 
