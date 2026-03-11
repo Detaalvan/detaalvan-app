@@ -189,8 +189,7 @@ export default function App() {
             <DetailPage 
               key="coaching"
               title="Coaching"
-              imageUrl="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=0;0;0;0,width=925,height=1280/image/543441174/67f7b35e-a5dc-4235-b0c9-012b8584ac1b.png"
-              icon={<Brain />}
+imageUrl="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=0;0;0;0,width=925,height=1280/image/543441174/67f7b35e-a5dc-4235-b0c9-012b8584ac1b.png"              icon={<Brain />}
               content="Iedereen heeft een autopilot. Niet iedereen ervaart regie. Word bij DeTaalVan meester over je innerlijk dialoog — met hoofd, hart en lijf. Minder reageren, meer kiezen. Zodat je keuzes maakt die écht van jou zijn. Gemiddeld 4 sessies. Vaak vergoed door je werkgever."
               onBack={goBack}
               ctaLink="mailto:info@detaalvan.nl"
