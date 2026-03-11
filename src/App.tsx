@@ -56,9 +56,10 @@ const DetailPage: React.FC<{
   onBack: () => void; 
   icon?: React.ReactNode;
   imageUrl?: string;
+  bannerUrl?: string;
   ctaText?: string;
   ctaLink?: string;
-}> = ({ title, subtitle, content, onBack, icon, imageUrl, ctaText = "Meer info / Aanvragen", ctaLink = "https://www.detaalvan.nl/contact" }) => (
+}> = ({ title, subtitle, content, onBack, icon, imageUrl, bannerUrl, ctaText = "Meer info / Aanvragen", ctaLink = "https://www.detaalvan.nl/contact" }) => (
   <motion.div
     initial={{ x: '100%' }}
     animate={{ x: 0 }}
@@ -70,29 +71,48 @@ const DetailPage: React.FC<{
       onClick={onBack}
       className="flex items-center gap-2 text-earth-muted mb-8 hover:text-earth-accent transition-colors"
     >
-      <ChevronLeft size={20} className="text-earth-primary" />
+      <ChevronLeft size={20} />
       <span>Terug</span>
     </button>
 
     <div className="flex flex-col items-center text-center gap-6 mt-4">
-      {imageUrl ? (
-        <div className="w-32 h-32 rounded-full overflow-hidden shadow-md border-4 border-white">
+      {imageUrl && (
+        <div className="w-[180px] h-[180px] rounded-full overflow-hidden shadow-md border-4 border-white">
           <img 
             src={imageUrl} 
             alt={title} 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-top"
             referrerPolicy="no-referrer"
           />
         </div>
-      ) : (
-        <div className="bg-white p-5 rounded-full shadow-sm text-earth-primary">
-          {icon && React.cloneElement(icon as React.ReactElement, { size: 48 })}
-        </div>
       )}
+
+      {icon && (
+        imageUrl ? (
+          <div className="text-[#233652]">
+            {React.cloneElement(icon as React.ReactElement, { size: 32 })}
+          </div>
+        ) : (
+          <div className="bg-white p-5 rounded-full shadow-sm text-earth-primary">
+            {React.cloneElement(icon as React.ReactElement, { size: 48 })}
+          </div>
+        )
+      )}
+
       <div className="flex flex-col gap-1">
         <h2 className="text-3xl font-serif text-earth-accent">{title}</h2>
         {subtitle && <p className="text-earth-muted text-sm italic">{subtitle}</p>}
       </div>
+
+      {bannerUrl && (
+        <img 
+          src={bannerUrl} 
+          alt={title} 
+          className="w-full h-[220px] object-cover object-[top_center] rounded-2xl shadow-sm"
+          referrerPolicy="no-referrer"
+        />
+      )}
+
       <p className="text-lg leading-relaxed text-earth-ink/80 max-w-md">
         {content}
       </p>
@@ -104,7 +124,7 @@ const DetailPage: React.FC<{
         className="mt-8 bg-earth-accent text-white px-8 py-4 rounded-full font-medium flex items-center gap-2 shadow-lg hover:bg-opacity-90 transition-all active:scale-95"
       >
         {ctaText}
-        <ArrowRight size={18} className="text-earth-primary" />
+        <ArrowRight size={18} />
       </a>
     </div>
   </motion.div>
@@ -164,13 +184,14 @@ export default function App() {
               exit={{ opacity: 0 }}
               className="space-y-8"
             >
+              <img 
+                src="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=0;0;0;0,width=925,height=1280/image/543441179/b4f07c42-4aaa-49f0-ba2d-a75ee12d6227.png" 
+                alt="Sjoerd Kersten" 
+                className="w-full h-auto max-h-[320px] object-contain bg-[#F5F0EB] rounded-2xl shadow-sm"
+                referrerPolicy="no-referrer"
+              />
               <div className="text-center space-y-2">
                 <p className="text-lg font-medium text-earth-ink">Welkom bij DeTaalVan</p>
-            <img 
-  src="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=0;0;0;0,width=925,height=1280/image/543441179/b4f07c42-4aaa-49f0-ba2d-a75ee12d6227.png"
-  alt="Sjoerd Kersten"
-  style={{width: '100%', maxHeight: '320px', objectFit: 'contain', borderRadius: '16px', background: '#F5F0EB'}}
-/>
                 <p className="text-sm text-earth-muted">Psychomotorische therapie, coaching en teamtraining. Kies een onderwerp om meer te lezen.</p>
               </div>
 
@@ -189,9 +210,9 @@ export default function App() {
             <DetailPage 
               key="coaching"
               title="Coaching"
-              imageUrl="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=0;0;0;0,width=925,height=1280/image/543441174/67f7b35e-a5dc-4235-b0c9-012b8584ac1b.png"
               icon={<Brain />}
-              content="Iedereen heeft een autopilot. Niet iedereen ervaart regie. Word bij DeTaalVan meester over je innerlijk dialoog — met hoofd, hart en lijf. Minder reageren, meer kiezen. Zodat je keuzes maakt die écht van jou zijn. Gemiddeld 4 sessies. Vaak vergoed door je werkgever."
+              imageUrl="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=0;0;0;0,width=925,height=1280/image/543441174/67f7b35e-a5dc-4235-b0c9-012b8584ac1b.png"
+              content="Iedereen heeft een autopilot. Niet iedereen ervaart regie. Wordt bij DeTaalVan meester over je innerlijke dialoog, met hoofd, hart en lijf. Zodat je keuzes maakt die écht van jou zijn."
               onBack={goBack}
               ctaLink="mailto:info@detaalvan.nl"
             />
@@ -206,7 +227,7 @@ export default function App() {
               className="page-transition bg-earth-bg p-6"
             >
               <button onClick={goBack} className="flex items-center gap-2 text-earth-muted mb-8">
-                <ChevronLeft size={20} className="text-earth-primary" />
+                <ChevronLeft size={20} />
                 <span>Terug</span>
               </button>
               <div className="text-center mb-8 space-y-2">
@@ -276,7 +297,7 @@ export default function App() {
               className="page-transition bg-earth-bg p-6"
             >
               <button onClick={goBack} className="flex items-center gap-2 text-earth-muted mb-8">
-                <ChevronLeft size={20} className="text-earth-primary" />
+                <ChevronLeft size={20} />
                 <span>Terug</span>
               </button>
               <div className="text-center mb-8 space-y-2">
@@ -320,8 +341,8 @@ export default function App() {
               key="about"
               title="Over Sjoerd Kersten"
               subtitle="Specialist in innerlijk dialoog en regie."
-              imageUrl="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=13;908;2891;841,width=960,height=1280/image/404499409/3473e8e5-c864-4275-804c-e3514e40ced0.jpg"
-              content="Sjoerd Kersten is psychomotorisch therapeut, coach en trainer met duizenden uren ervaring. Hij werkt met professionals, teams en organisaties aan één centrale vraag: wie stuurt jou, en wanneer stuur jij zelf? Met een achtergrond in de ziekenhuis psychiatrie en 8 jaar als ondernemer combineert Sjoerd Kersten psychomotorische therapie, biofeedback en de IOM-methode tot een aanpak die lichaam, hoofd en hart samenbrengt. Direct, holistisch and gericht op blijvende verandering."
+              imageUrl="https://raw.githubusercontent.com/Detaalvan/detaalvan-app/main/Sjoerd8.png"
+              content="Sjoerd Kersten is psychomotorisch therapeut, coach en trainer met duizenden uren ervaring. Hij werkt met professionals, teams en organisaties aan één centrale vraag: wie stuurt jou, and wanneer stuur jij zelf? Met een achtergrond in de ziekenhuis psychiatrie en 8 jaar als ondernemer combineert Sjoerd Kersten psychomotorische therapie, biofeedback en de IOM-methode tot een aanpak die lichaam, hoofd en hart samenbrengt. Direct, holistisch and gericht op blijvende verandering."
               onBack={goBack}
               ctaText="Meer over Sjoerd Kersten"
               ctaLink="https://www.detaalvan.nl/over-mij/"
@@ -337,7 +358,7 @@ export default function App() {
               className="page-transition bg-earth-bg p-6 flex flex-col items-center"
             >
               <button onClick={goBack} className="self-start flex items-center gap-2 text-earth-muted mb-8">
-                <ChevronLeft size={20} className="text-earth-primary" />
+                <ChevronLeft size={20} />
                 <span>Terug</span>
               </button>
               
@@ -351,7 +372,7 @@ export default function App() {
                   href="tel:+31643549491"
                   className="bg-white p-5 rounded-2xl shadow-sm border border-black/5 flex items-center gap-4 transition-all hover:shadow-md active:scale-[0.98]"
                 >
-                  <div className="text-earth-primary">
+                  <div className="text-earth-ink">
                     <Phone size={24} />
                   </div>
                   <span className="font-medium text-earth-ink">Bellen</span>
@@ -361,7 +382,7 @@ export default function App() {
                   href="mailto:info@detaalvan.nl"
                   className="bg-white p-5 rounded-2xl shadow-sm border border-black/5 flex items-center gap-4 transition-all hover:shadow-md active:scale-[0.98]"
                 >
-                  <div className="text-earth-primary">
+                  <div className="text-earth-ink">
                     <Mail size={24} />
                   </div>
                   <span className="font-medium text-earth-ink">Mailen</span>
@@ -373,7 +394,7 @@ export default function App() {
                   rel="noopener noreferrer"
                   className="bg-white p-5 rounded-2xl shadow-sm border border-black/5 flex items-center gap-4 transition-all hover:shadow-md active:scale-[0.98]"
                 >
-                  <div className="text-earth-primary">
+                  <div className="text-earth-ink">
                     <MessageCircle size={24} />
                   </div>
                   <span className="font-medium text-earth-ink">WhatsApp</span>
@@ -385,7 +406,7 @@ export default function App() {
                   rel="noopener noreferrer"
                   className="bg-white p-5 rounded-2xl shadow-sm border border-black/5 flex items-center gap-4 transition-all hover:shadow-md active:scale-[0.98]"
                 >
-                  <div className="text-earth-primary">
+                  <div className="text-earth-ink">
                     <Globe size={24} />
                   </div>
                   <span className="font-medium text-earth-ink">Contactformulier</span>

@@ -1,0 +1,15 @@
+{
+  "name": "DeTaalVan Mobiel",
+  "short_name": "DeTaalVan",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f5f0",
+  "theme_color": "#5A5A40",
+  "icons": [
+    {
+      "src": "https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=0;0;0;0,width=800,height=800/image/524769538/ac481ce7-7c12-4986-8c85-1175f1f41f09.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
