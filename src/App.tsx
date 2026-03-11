@@ -117,7 +117,7 @@ const DetailPage: React.FC<{
         />
       )}
 
-      <p className="text-lg leading-relaxed text-earth-ink/80 max-w-md">
+      <p className="text-lg leading-relaxed text-earth-ink/80 max-w-md whitespace-pre-wrap">
         {content}
       </p>
       
@@ -178,6 +178,9 @@ const GoogleReviewBadge: React.FC = () => (
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [history, setHistory] = useState<Page[]>(['home']);
+  const [lang, setLang] = useState<'nl' | 'en'>('nl');
+
+  const t = (nl: string, en: string) => lang === 'nl' ? nl : en;
 
   const navigateTo = (page: Page) => {
     setHistory(prev => [...prev, page]);
@@ -208,13 +211,28 @@ export default function App() {
   return (
     <div className="max-w-[430px] mx-auto min-h-screen bg-earth-bg relative shadow-2xl overflow-hidden flex flex-col">
       {/* Header */}
-      <header className="p-8 pt-12 text-center">
+      <header className="p-8 pt-12 text-center relative">
+        <div className="absolute top-8 right-8 flex items-center gap-2 text-[#233652] text-xs z-50">
+          <button 
+            onClick={() => setLang('nl')}
+            className={`transition-all ${lang === 'nl' ? 'font-bold underline' : 'opacity-50'}`}
+          >
+            NL
+          </button>
+          <span className="opacity-20">|</span>
+          <button 
+            onClick={() => setLang('en')}
+            className={`transition-all ${lang === 'en' ? 'font-bold underline' : 'opacity-50'}`}
+          >
+            EN
+          </button>
+        </div>
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
         >
           <h1 className="text-4xl font-serif text-earth-primary mb-1">Sjoerd Kersten</h1>
-          <p className="text-earth-muted text-sm italic">Ik maak zichtbaar wat anderen missen.</p>
+          <p className="text-earth-muted text-sm italic">{t('Ik maak zichtbaar wat anderen missen.', 'I make visible what others miss.')}</p>
           <p className="text-[10px] text-earth-muted/60 mt-1 uppercase tracking-widest">DeTaalVan</p>
         </motion.div>
       </header>
@@ -237,16 +255,16 @@ export default function App() {
                 referrerPolicy="no-referrer"
               />
               <div className="text-center">
-                <p className="text-sm text-earth-muted">Psychomotorische therapie, coaching en teamtraining. Kies een onderwerp om meer te lezen.</p>
+                <p className="text-sm text-earth-muted">{t('Psychomotorische therapie, coaching en teamtraining. Kies een onderwerp om meer te lezen.', 'Psychomotor therapy, coaching and team training. Choose a topic to read more.')}</p>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <Tile id="coaching" icon={<Brain />} label="Coaching" onClick={navigateTo} />
-                <Tile id="teamtraining" icon={<Users />} label="Teamtraining" onClick={navigateTo} />
+                <Tile id="teamtraining" icon={<Users />} label={t('Teamtraining', 'Team Training')} onClick={navigateTo} />
                 <Tile id="burnout" icon={<Flame />} label="Burn-out" onClick={navigateTo} />
                 <Tile id="contact" icon={<MessageSquare />} label="Contact" onClick={navigateTo} />
                 <Tile id="reviews" icon={<Star />} label="Reviews" onClick={navigateTo} />
-                <Tile id="about" icon={<Info />} label="Over Sjoerd" onClick={navigateTo} />
+                <Tile id="about" icon={<Info />} label={t('Over Sjoerd', 'About Sjoerd')} onClick={navigateTo} />
               </div>
 
               <div className="pt-4">
@@ -261,8 +279,12 @@ export default function App() {
               title="Coaching"
               icon={<Brain />}
               imageUrl="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=0;0;0;0,width=925,height=1280/image/543441174/67f7b35e-a5dc-4235-b0c9-012b8584ac1b.png"
-              content="Iedereen heeft een autopilot. Niet iedereen ervaart regie. Wordt bij DeTaalVan meester over je innerlijke dialoog. Met hoofd, hart en lijf. Zodat je keuzes maakt die écht van jou zijn."
+              content={t(
+                "Iedereen heeft een autopilot. Niet iedereen ervaart regie. Wordt bij DeTaalVan meester over je innerlijke dialoog. Met hoofd, hart en lijf. Zodat je keuzes maakt die écht van jou zijn.",
+                "Everyone has an autopilot. Not everyone experiences control. Master your inner dialogue at DeTaalVan. With head, heart and body. So you make choices that are truly yours."
+              )}
               onBack={goBack}
+              ctaText={t('Meer info / Aanvragen', 'More info / Request')}
               onCtaClick={() => navigateTo('contact')}
             />
           )}
@@ -285,10 +307,13 @@ export default function App() {
               </button>
 
               <div className="text-center mb-8 space-y-2">
-                <h2 className="text-3xl font-serif text-earth-accent">Teamtraining</h2>
-                <p className="text-lg text-earth-ink font-medium">Elk team heeft een eigen taal. Wij helpen jullie die vinden.</p>
+                <h2 className="text-3xl font-serif text-earth-accent">{t('Teamtraining', 'Team Training')}</h2>
+                <p className="text-lg text-earth-ink font-medium">{t('Elk team heeft een eigen taal. Wij helpen jullie die vinden.', 'Every team has its own language. We help you find it.')}</p>
                 <p className="text-xs text-earth-muted italic">
-                  Alle trainingen zijn op maat en verzorg ik samen met Marvin Levant van{' '}
+                  {t(
+                    'Alle trainingen zijn op maat en verzorg ik samen met Marvin Levant van ',
+                    'All training sessions are tailor-made and I provide them together with Marvin Levant from '
+                  )}
                   <a 
                     href="https://www.outsidetheboksacademy.nl/" 
                     target="_blank" 
@@ -303,16 +328,16 @@ export default function App() {
               <div className="space-y-4 mb-10">
                 {[
                   {
-                    title: "Communicatie Training",
-                    description: "Effectiever samenwerken door bewust te regisseren in communicatie."
+                    title: t("Communicatie Training", "Communication Training"),
+                    description: t("Effectiever samenwerken door bewust te regisseren in communicatie.", "Collaborate more effectively by consciously directing communication.")
                   },
                   {
-                    title: "Teamdynamiek & Samenwerking",
-                    description: "Inzicht in teamdynamiek, boksen als metafoor voor communicatie, teambuilding. Sterker team, meer begrip, betere samenwerking."
+                    title: t("Teamdynamiek & Samenwerking", "Team Dynamics & Collaboration"),
+                    description: t("Inzicht in teamdynamiek, boksen als metafoor voor communicatie, teambuilding. Sterker team, meer begrip, betere samenwerking.", "Insight into team dynamics, boxing as a metaphor for communication, teambuilding. Stronger team, more understanding, better collaboration.")
                   },
                   {
-                    title: "Sales Training",
-                    description: "Krachtige salestrainingen rond actuele thema's zoals klantgerichtheid, onderhandelingstechnieken, communicatie, samenwerking en persoonlijk leiderschap."
+                    title: t("Sales Training", "Sales Training"),
+                    description: t("Krachtige salestrainingen rond actuele thema's zoals klantgerichtheid, onderhandelingstechnieken, communicatie, samenwerking en persoonlijk leiderschap.", "Powerful sales training around current themes such as customer focus, negotiation techniques, communication, collaboration and personal leadership.")
                   }
                 ].map((item, index) => (
                   <div key={index} className="bg-white p-5 rounded-2xl shadow-sm border border-black/5">
@@ -327,7 +352,7 @@ export default function App() {
                   onClick={() => navigateTo('contact')}
                   className="w-full max-w-xs bg-earth-primary text-white px-6 py-4 rounded-full font-medium text-center shadow-lg hover:shadow-xl transition-all active:scale-95"
                 >
-                  Meer info / Aanvragen
+                  {t('Meer info / Aanvragen', 'More info / Request')}
                 </button>
               </div>
             </motion.div>
@@ -337,10 +362,14 @@ export default function App() {
             <DetailPage 
               key="burnout"
               title="Burn-out"
-              subtitle="Altijd aan. Nooit echt uit."
+              subtitle={t("Altijd aan. Nooit echt uit.", "Always on. Never really off.")}
               icon={<Flame />}
-              content="Gejaagd. Grenzen kwijt. Het gevoel dat je jezelf een beetje bent verloren. Bij DeTaalVan beginnen we bij het lichaam, want daar begint herstel echt. Van regulatie naar inzicht, van inzicht naar regie. Stap voor stap, afgestemd op jouw situatie."
+              content={t(
+                "Gejaagd. Grenzen kwijt. Het gevoel dat je jezelf een beetje bent verloren. Bij DeTaalVan beginnen we bij het lichaam, want daar begint herstel echt. Van regulatie naar inzicht, van inzicht naar regie. Stap voor stap, afgestemd op jouw situatie.",
+                "Rushed. Lost boundaries. The feeling that you've lost yourself a bit. At DeTaalVan we start with the body, because that's where recovery really begins. From regulation to insight, from insight to control. Step by step, tailored to your situation."
+              )}
               onBack={goBack}
+              ctaText={t('Meer info / Aanvragen', 'More info / Request')}
               onCtaClick={() => navigateTo('contact')}
             />
           )}
@@ -359,7 +388,7 @@ export default function App() {
               </button>
               <div className="text-center mb-8 space-y-2">
                 <h2 className="text-3xl font-serif text-earth-accent">Reviews</h2>
-                <p className="text-earth-muted text-sm italic">Wat anderen zeggen.</p>
+                <p className="text-earth-muted text-sm italic">{t("Wat anderen zeggen.", "What others say.")}</p>
               </div>
 
               <div className="mb-8">
@@ -368,9 +397,9 @@ export default function App() {
 
               <div className="space-y-6 mb-12">
                 {[
-                  "De coaching heeft mij meer rust en vertrouwen gegeven, waardoor ik sterker in mijn schoenen sta en de regie weer in handen voel te hebben.",
-                  "Nu kan ik kiezen om naar mijn lichaam en grenzen te luisteren, waardoor spanning minder opbouwt en paniekaanvallen verminderen.",
-                  "Ik ga bewuster door mijn dag heen en voel me aan het einde van de dag minder uitgeput."
+                  t("De coaching heeft mij meer rust en vertrouwen gegeven, waardoor ik sterker in mijn schoenen sta en de regie weer in handen voel te hebben.", "Coaching has given me more peace and confidence, making me feel stronger and in control again."),
+                  t("Nu kan ik kiezen om naar mijn lichaam en grenzen te luisteren, waardoor spanning minder opbouwt en paniekaanvallen verminderen.", "Now I can choose to listen to my body and boundaries, so tension builds up less and panic attacks decrease."),
+                  t("Ik ga bewuster door mijn dag heen en voel me aan het einde van de dag minder uitgeput.", "I go through my day more consciously and feel less exhausted at the end of the day.")
                 ].map((text, i) => (
                   <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-black/5 italic text-earth-ink/80">
                     "{text}"
@@ -384,7 +413,7 @@ export default function App() {
                   rel="noopener noreferrer"
                   className="w-full max-w-xs bg-earth-accent text-white px-6 py-3 rounded-full font-medium text-center shadow-md hover:bg-opacity-90 transition-all text-sm"
                 >
-                  Lees alle reviews op Google
+                  {t("Lees alle reviews op Google", "Read all reviews on Google")}
                 </a>
                 <a 
                   href="https://share.google/T64QxojHKzQTyNgGw"
@@ -392,7 +421,7 @@ export default function App() {
                   rel="noopener noreferrer"
                   className="w-full max-w-xs bg-white text-earth-accent border border-earth-accent px-6 py-3 rounded-full font-medium text-center shadow-sm hover:bg-earth-bg transition-all text-sm"
                 >
-                  Laat zelf een review achter
+                  {t("Laat zelf een review achter", "Leave a review yourself")}
                 </a>
               </div>
             </motion.div>
@@ -401,14 +430,17 @@ export default function App() {
           {currentPage === 'about' && (
             <DetailPage 
               key="about"
-              title="Over Sjoerd Kersten"
-              subtitle="Specialist in innerlijk dialoog en regie."
+              title={t('Over Sjoerd Kersten', 'About Sjoerd Kersten')}
+              subtitle={t('Specialist in innerlijk dialoog en regie.', 'Specialist in inner dialogue and control.')}
               imageUrl="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=13;908;2891;841,width=960,height=1280/image/404499409/3473e8e5-c864-4275-804c-e3514e40ced0.jpg"
               imageStyle={{ objectPosition: 'center 5%' }}
-              content="Sjoerd Kersten is psychomotorisch therapeut, coach en trainer met duizenden uren ervaring. Hij werkt met professionals, teams en organisaties aan één centrale vraag: wie stuurt jou, and wanneer stuur jij zelf? Met een achtergrond in de ziekenhuis psychiatrie en 8 jaar als ondernemer combineert Sjoerd Kersten psychomotorische therapie, biofeedback en de IOM-methode tot een aanpak die lichaam, hoofd en hart samenbrengt. Direct, holistisch and gericht op blijvende verandering."
+              content={t(
+                "Sjoerd Kersten is psychomotorisch therapeut, coach en trainer met duizenden uren ervaring. Hij werkt met professionals, teams en organisaties aan één centrale vraag: wie stuurt jou, en wanneer stuur jij zelf?\n\nMet een achtergrond in de ziekenhuis psychiatrie en 8 jaar als ondernemer combineert Sjoerd Kersten psychomotorische therapie, biofeedback en de IOM-methode tot een aanpak die lichaam, hoofd en hart samenbrengt. Direct, holistisch en gericht op blijvende verandering.",
+                "Sjoerd Kersten is a psychomotor therapist, coach and trainer with thousands of hours of experience. He works with professionals, teams and organizations on one central question: who directs you, and when do you direct yourself?\n\nWith a background in hospital psychiatry and 8 years as an entrepreneur, Sjoerd Kersten combines psychomotor therapy, biofeedback and the IOM method into an approach that brings body, head and heart together. Direct, holistic and focused on lasting change."
+              )}
               onBack={goBack}
-              ctaText="Meer over Sjoerd Kersten"
-              ctaLink="https://www.detaalvan.nl/over-mij/"
+              ctaText={t('Stuur een bericht', 'Send a message')}
+              onCtaClick={() => navigateTo('contact')}
             />
           )}
 
@@ -426,8 +458,8 @@ export default function App() {
               </button>
               
               <div className="text-center mb-8">
-                <h2 className="text-3xl font-serif text-earth-accent mb-2">Contact</h2>
-                <p className="text-earth-muted italic">Bel, app of mail. Direct contact. Snel reactie.</p>
+                <h2 className="text-3xl font-serif text-earth-accent mb-2">{t('Neem contact op', 'Get in touch')}</h2>
+                <p className="text-earth-muted italic">{t('Bel, app of mail. Direct contact. Snel reactie.', 'Call, app or mail. Direct contact. Fast response.')}</p>
               </div>
 
               <div className="w-full max-w-md space-y-4 mb-10">
@@ -438,7 +470,7 @@ export default function App() {
                   <div className="text-earth-ink">
                     <Phone size={24} />
                   </div>
-                  <span className="font-medium text-earth-ink">Bellen</span>
+                  <span className="font-medium text-earth-ink">{t('Bellen', 'Call me')}</span>
                 </a>
 
                 <a 
@@ -448,7 +480,7 @@ export default function App() {
                   <div className="text-earth-ink">
                     <Mail size={24} />
                   </div>
-                  <span className="font-medium text-earth-ink">Mailen</span>
+                  <span className="font-medium text-earth-ink">{t('Mailen', 'Email')}</span>
                 </a>
 
                 <a 
@@ -472,7 +504,7 @@ export default function App() {
                   <div className="text-earth-ink">
                     <Globe size={24} />
                   </div>
-                  <span className="font-medium text-earth-ink">Website</span>
+                  <span className="font-medium text-earth-ink">{t('Website', 'Website')}</span>
                 </a>
 
                 <a 
@@ -484,7 +516,7 @@ export default function App() {
                   <div className="text-earth-ink">
                     <Calendar size={24} />
                   </div>
-                  <span className="font-medium text-earth-ink">Boekingen</span>
+                  <span className="font-medium text-earth-ink">{t('Boekingen', 'Bookings')}</span>
                 </a>
               </div>
 
@@ -539,7 +571,7 @@ export default function App() {
         <NavButton 
           active={currentPage === 'about'} 
           icon={<User size={24} />} 
-          label="Over mij" 
+          label={t('Over mij', 'About Me')} 
           onClick={() => handleNavClick('about')} 
         />
       </nav>
