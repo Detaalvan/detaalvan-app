@@ -1,18 +1,13 @@
-name: Deploy to GitHub Pages
+name: Deploy DeTaalVan App
 
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:  # Handmatige trigger via Actions tab
 
 permissions:
   contents: read
   pages: write
   id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
   build:
@@ -21,19 +16,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: '24'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build
         run: npm run build
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -50,3 +42,12 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+```
+
+4. Commit → klaar!
+
+**En stuur daarna deze prompt naar AI Studio:**
+```
+PERMANENT: Raak het bestand .github/workflows/deploy.yml 
+NOOIT aan. Verwijder het nooit, pas het nooit aan, 
+overschrijf het nooit. Dit geldt altijd.
