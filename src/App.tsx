@@ -10,6 +10,7 @@ import {
   Home, 
   User, 
   ChevronLeft,
+  ChevronDown,
   ExternalLink,
   ArrowRight,
   Phone,
@@ -22,7 +23,7 @@ import {
 } from 'lucide-react';
 
 // --- Types ---
-type Page = 'home' | 'coaching' | 'teamtraining' | 'teamtraining-tweedaagse' | 'teamtraining-losse-sessie' | 'teamtraining-traject-op-maat' | 'burnout' | 'contact' | 'reviews' | 'about';
+type Page = 'home' | 'coaching' | 'teamtraining' | 'teamtraining-tweedaagse' | 'teamtraining-losse-sessie' | 'teamtraining-traject-op-maat' | 'burnout' | 'contact' | 'reviews' | 'about' | 'sales-training';
 
 interface TileProps {
   id: Page;
@@ -179,6 +180,7 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [history, setHistory] = useState<Page[]>(['home']);
   const [lang, setLang] = useState<'nl' | 'en'>('nl');
+  const [isIomOpen, setIsIomOpen] = useState(false);
 
   const t = (nl: string, en: string) => lang === 'nl' ? nl : en;
 
@@ -325,6 +327,19 @@ export default function App() {
                 </p>
               </div>
 
+              <iframe
+                src="https://www.youtube.com/embed/73E89pJaDWs"
+                style={{
+                  width: '60%',
+                  aspectRatio: '9/16',
+                  borderRadius: '16px',
+                  border: 'none',
+                  display: 'block',
+                  margin: '0 auto 24px auto'
+                }}
+                allow="autoplay"
+              />
+
               <div className="space-y-4 mb-10">
                 {[
                   {
@@ -336,15 +351,180 @@ export default function App() {
                     description: t("Inzicht in teamdynamiek, boksen als metafoor voor communicatie, teambuilding. Sterker team, meer begrip, betere samenwerking.", "Insight into team dynamics, boxing as a metaphor for communication, teambuilding. Stronger team, more understanding, better collaboration.")
                   },
                   {
-                    title: t("Sales Training", "Sales Training"),
-                    description: t("Krachtige salestrainingen rond actuele thema's zoals klantgerichtheid, onderhandelingstechnieken, communicatie, samenwerking en persoonlijk leiderschap.", "Powerful sales training around current themes such as customer focus, negotiation techniques, communication, collaboration and personal leadership.")
+                    title: t("Sales training", "Sales training"),
+                    description: t("Krachtige salestrainingen rond actuele thema's zoals klantgerichtheid, onderhandelingstechnieken, communicatie, samenwerking en persoonlijk leiderschap.", "Powerful sales training around current themes such as customer focus, negotiation techniques, communication, collaboration and personal leadership."),
+                    id: 'sales-training' as Page
                   }
                 ].map((item, index) => (
-                  <div key={index} className="bg-white p-5 rounded-2xl shadow-sm border border-black/5">
+                  <div 
+                    key={index} 
+                    className={`bg-white p-5 rounded-2xl shadow-sm border border-black/5 ${item.id ? 'cursor-pointer hover:border-earth-accent/30 transition-colors' : ''}`}
+                    onClick={item.id ? () => navigateTo(item.id) : undefined}
+                  >
                     <h3 className="font-bold text-earth-ink mb-1">{item.title}</h3>
                     <p className="text-sm text-earth-ink/80">{item.description}</p>
                   </div>
                 ))}
+              </div>
+
+              <div className="flex justify-center">
+                <button 
+                  onClick={() => navigateTo('contact')}
+                  className="w-full max-w-xs bg-earth-primary text-white px-6 py-4 rounded-full font-medium text-center shadow-lg hover:shadow-xl transition-all active:scale-95"
+                >
+                  {t('Meer info / Aanvragen', 'More info / Request')}
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {currentPage === 'sales-training' && (
+            <motion.div
+              key="sales-training"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="page-transition bg-earth-bg z-10 p-6"
+            >
+              <button 
+                onClick={() => navigateTo('teamtraining')}
+                className="flex items-center gap-2 text-earth-muted mb-8 hover:text-earth-accent transition-colors"
+              >
+                <ChevronLeft size={20} />
+                <span>Terug</span>
+              </button>
+
+              <div className="text-center mb-8 space-y-2">
+                <h2 className="text-3xl font-serif text-earth-accent">{t('Sales training', 'Sales training')}</h2>
+              </div>
+
+              <iframe
+                src="https://www.youtube.com/embed/73E89pJaDWs"
+                width="60%"
+                style={{aspectRatio: '9/16', borderRadius: '16px', border: 'none', display: 'block', margin: '0 auto 24px auto'}}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+
+              <div className="space-y-8 text-earth-ink mb-12">
+                <div className="px-2">
+                  <p className="text-sm text-earth-muted leading-relaxed text-center max-w-sm mx-auto">
+                    {t(
+                      "In sales draait alles om het opbouwen van waardevolle verbindingen en vertrouwen. Het gaat niet alleen om het sluiten van deals, maar om het echt begrijpen van de behoeften van je klanten en het bieden van oplossingen die een verschil maken. Door authentiek te zijn en oprechte interesse te tonen, bouw je langdurige relaties op die verder gaan dan een enkele transactie.",
+                      "In sales, it's all about building valuable connections and trust. It's not just about closing deals, but about truly understanding your customers' needs and providing solutions that make a difference. By being authentic and showing genuine interest, you build long-lasting relationships that go beyond a single transaction."
+                    )}
+                  </p>
+                </div>
+
+                <div className="w-full">
+                  <button
+                    onClick={() => setIsIomOpen(!isIomOpen)}
+                    className="flex items-center justify-between w-full text-left py-3 border-b border-black/10"
+                  >
+                    <span className="font-serif text-earth-accent text-lg">
+                      {t("Waarom boksen en de IOM-methode?", "Why boxing and the IOM method?")}
+                    </span>
+                    <ChevronDown 
+                      size={18} 
+                      className={`text-earth-muted transition-transform ${isIomOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+                  
+                  {isIomOpen && (
+                    <div className="pt-4 pb-2">
+                      <p className="text-sm text-earth-muted leading-relaxed whitespace-pre-line">
+                        {t(
+                          "Boksen is meer dan een fysieke sport. Het is een dynamisch spel van actie en reactie, strategie en timing. Net als in de ring draait het in salesteams om observatie, timing, actie en reactie. Het achterhalen van de behoeften van de klant staat daarbij centraal.\n\nDe IOM-methode voegt hier een cruciale laag aan toe. Waar boksen de buitenkant traint: reactie, timing en samenwerking. Richt de IOM-methode zich op de binnenkant: het innerlijk dialoog. Wie stuurt jouw reacties? De autopilot of de regisseur? Door bewust te leren schakelen tussen hoofd, hart en lijf worden salesgesprekken authentieker, effectiever en duurzamer.",
+                          "Boxing is more than a physical sport. It is a dynamic game of action and reaction, strategy and timing. Just like in the ring, sales teams are all about observation, timing, action and reaction. Finding out the customer's needs is central to this.\n\nThe IOM method adds a crucial layer to this. Where boxing trains the outside: reaction, timing and cooperation. The IOM method focuses on the inside: the inner dialogue. Who controls your reactions? The autopilot or the director? By learning to consciously switch between head, heart and body, sales conversations become more authentic, effective and sustainable."
+                        )}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-xl font-serif text-earth-accent px-2">{t("Thema's", "Themes")}</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-earth-card p-6 rounded-2xl shadow-sm border border-black/5 flex flex-col items-center justify-center text-center gap-2">
+                      <span className="text-xs font-medium text-earth-ink text-center leading-tight">
+                        {t("Verkoop en onderhandeltechnieken", "Sales and negotiation techniques")}
+                      </span>
+                      <span className="text-[10px] text-earth-muted leading-tight text-center mt-1">
+                        {t("Overtuigend communiceren en met vertrouwen onderhandelen.", "Communicate persuasively and negotiate with confidence.")}
+                      </span>
+                    </div>
+                    <div className="bg-earth-card p-6 rounded-2xl shadow-sm border border-black/5 flex flex-col items-center justify-center text-center gap-2">
+                      <span className="text-xs font-medium text-earth-ink text-center leading-tight">
+                        {t("Bouwen aan klantrelaties", "Building customer relationships")}
+                      </span>
+                      <span className="text-[10px] text-earth-muted leading-tight text-center mt-1">
+                        {t("Klantbehoeften ontdekken en vertalen naar oplossingen.", "Discover customer needs and translate them into solutions.")}
+                      </span>
+                    </div>
+                    <div className="bg-earth-card p-6 rounded-2xl shadow-sm border border-black/5 flex flex-col items-center justify-center text-center gap-2">
+                      <span className="text-xs font-medium text-earth-ink text-center leading-tight">
+                        {t("Presentatie en communicatie", "Presentation and communication")}
+                      </span>
+                      <span className="text-[10px] text-earth-muted leading-tight text-center mt-1">
+                        {t("Actief luisteren, storytelling en impact maken.", "Active listening, storytelling and making an impact.")}
+                      </span>
+                    </div>
+                    <div className="bg-earth-card p-6 rounded-2xl shadow-sm border border-black/5 flex flex-col items-center justify-center text-center gap-2">
+                      <span className="text-xs font-medium text-earth-ink text-center leading-tight">
+                        {t("Persoonlijke ontwikkeling", "Personal development")}
+                      </span>
+                      <span className="text-[10px] text-earth-muted leading-tight text-center mt-1">
+                        {t("Groeimindset, tegenslagen overwinnen en motivatie.", "Growth mindset, overcoming setbacks and motivation.")}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="px-2">
+                  <h3 className="text-xl font-serif text-earth-accent mb-3">{t("Resultaat na de training", "Result after the training")}</h3>
+                  <ul className="list-disc list-inside space-y-1">
+                    <li className="text-sm text-earth-muted leading-tight">{t("Verbeterde communicatievaardigheden", "Improved communication skills")}</li>
+                    <li className="text-sm text-earth-muted leading-tight">{t("Verhoogd zelfbewustzijn en persoonlijke groei", "Increased self-awareness and personal growth")}</li>
+                    <li className="text-sm text-earth-muted leading-tight">{t("Integratie van verkooptechnieken met eigen stijl", "Integration of sales techniques with own style")}</li>
+                  </ul>
+                </div>
+
+                <div className="px-2">
+                  <div className="w-full space-y-3">
+                    <h3 className="font-serif text-earth-accent text-lg mb-4">
+                      {t("Praktische informatie", "Practical information")}
+                    </h3>
+                    
+                    <div className="flex justify-between border-b border-black/5 pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider">{t("Duur", "Duration")}</span>
+                      <span className="text-sm text-earth-ink text-right">
+                        {t("Halve dag of hele dag", "Half day or full day")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between border-b border-black/5 pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider">{t("Locatie", "Location")}</span>
+                      <span className="text-sm text-earth-ink text-right">
+                        {t("Door heel Nederland", "Throughout the Netherlands")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between border-b border-black/5 pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider">{t("Deelnemers", "Participants")}</span>
+                      <span className="text-sm text-earth-ink text-right">
+                        {t("Minimaal 6", "Minimum 6")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider">{t("Prijs", "Price")}</span>
+                      <span className="text-sm text-earth-ink text-right">
+                        {t("Op maat", "Custom")}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="flex justify-center">
