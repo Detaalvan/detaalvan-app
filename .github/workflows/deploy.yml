@@ -42,12 +42,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-```
-
-4. Commit → klaar!
-
-**En stuur daarna deze prompt naar AI Studio:**
-```
-PERMANENT: Raak het bestand .github/workflows/deploy.yml 
-NOOIT aan. Verwijder het nooit, pas het nooit aan, 
-overschrijf het nooit. Dit geldt altijd.
