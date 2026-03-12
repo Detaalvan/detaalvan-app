@@ -1,4 +1,3 @@
-// v2
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
@@ -152,17 +151,17 @@ const GoogleReviewBadge: React.FC = () => (
     rel="noopener noreferrer"
     className="bg-white px-5 py-3 rounded-2xl shadow-sm border border-black/5 flex items-center gap-4 mx-auto w-fit hover:shadow-md transition-all active:scale-95"
   >
-    <div className="text-2xl font-bold text-earth-ink leading-none">4.6</div>
+    <div className="text-2xl font-bold text-earth-ink leading-none">4.7</div>
     <div className="flex flex-col justify-center">
       <div className="flex text-[#FBBC05] text-sm mb-0.5">
         <span>★</span><span>★</span><span>★</span><span>★</span>
         <div className="relative">
           <span className="text-gray-200">★</span>
-          <span className="absolute top-0 left-0 w-[50%] overflow-hidden">★</span>
+          <span className="absolute top-0 left-0 w-[75%] overflow-hidden">★</span>
         </div>
       </div>
       <div className="text-[10px] text-earth-muted leading-none">
-        8 reviews · Beoordeeld op
+        9 reviews · Beoordeeld op
       </div>
     </div>
     <div className="flex font-bold text-lg tracking-tighter leading-none">
@@ -250,13 +249,13 @@ export default function App() {
               className="space-y-8"
             >
               <img 
-                src="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=0;0;0;0,width=925,height=1280/image/543441179/b4f07c42-4aaa-49f0-ba2d-a75ee12d6227.png" 
+                src="/Sjoerd111.png" 
                 alt="Sjoerd Kersten" 
                 className="w-full h-auto max-h-[320px] object-contain bg-[#F5F0EB] rounded-2xl shadow-sm"
                 referrerPolicy="no-referrer"
               />
               <div className="text-center">
-                <p className="text-sm text-earth-muted">{t('Psychomotorische therapie, coaching en teamtraining. Kies een onderwerp om meer te lezen.', 'Psychomotor therapy, coaching and team training. Choose a topic to read more.')}</p>
+                <p className="text-sm text-earth-muted">{t('Klik op een onderwerp om meer te lezen.', 'Click on a topic to read more.')}</p>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -279,7 +278,7 @@ export default function App() {
               key="coaching"
               title="Coaching"
               icon={<Brain />}
-              imageUrl="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=0;0;0;0,width=925,height=1280/image/543441174/67f7b35e-a5dc-4235-b0c9-012b8584ac1b.png"
+              imageUrl="/Sjoerd5.png"
               content={t(
                 "Iedereen heeft een autopilot. Niet iedereen ervaart regie. Wordt bij DeTaalVan meester over je innerlijke dialoog. Met hoofd, hart en lijf. Zodat je keuzes maakt die écht van jou zijn.",
                 "Everyone has an autopilot. Not everyone experiences control. Master your inner dialogue at DeTaalVan. With head, heart and body. So you make choices that are truly yours."
@@ -433,7 +432,7 @@ export default function App() {
               key="about"
               title={t('Over Sjoerd Kersten', 'About Sjoerd Kersten')}
               subtitle={t('Specialist in innerlijk dialoog en regie.', 'Specialist in inner dialogue and control.')}
-              imageUrl="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=13;908;2891;841,width=960,height=1280/image/404499409/3473e8e5-c864-4275-804c-e3514e40ced0.jpg"
+              imageUrl="/Sjoerd8.png"
               imageStyle={{ objectPosition: 'center 5%' }}
               content={t(
                 "Sjoerd Kersten is psychomotorisch therapeut, coach en trainer met duizenden uren ervaring. Hij werkt met professionals, teams en organisaties aan één centrale vraag: wie stuurt jou, en wanneer stuur jij zelf?\n\nMet een achtergrond in de ziekenhuis psychiatrie en 8 jaar als ondernemer combineert Sjoerd Kersten psychomotorische therapie, biofeedback en de IOM-methode tot een aanpak die lichaam, hoofd en hart samenbrengt. Direct, holistisch en gericht op blijvende verandering.",
