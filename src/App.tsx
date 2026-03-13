@@ -181,6 +181,7 @@ export default function App() {
   const [history, setHistory] = useState<Page[]>(['home']);
   const [lang, setLang] = useState<'nl' | 'en'>('nl');
   const [isIomOpen, setIsIomOpen] = useState(false);
+  const [isResultOpen, setIsResultOpen] = useState(false);
 
   const t = (nl: string, en: string) => lang === 'nl' ? nl : en;
 
@@ -420,9 +421,9 @@ export default function App() {
                 <div className="w-full">
                   <button
                     onClick={() => setIsIomOpen(!isIomOpen)}
-                    className="flex items-center justify-between w-full text-left py-3 border-b border-black/10"
+                    className="flex items-center justify-center w-full text-center py-3 border-b border-black/10"
                   >
-                    <span className="font-serif text-earth-accent text-lg">
+                    <span className="font-serif text-earth-accent text-lg text-center w-full">
                       {t("Waarom boksen en de IOM-methode?", "Why boxing and the IOM method?")}
                     </span>
                     <ChevronDown 
@@ -481,13 +482,71 @@ export default function App() {
                   </div>
                 </div>
 
-                <div className="px-2">
-                  <h3 className="text-xl font-serif text-earth-accent mb-3">{t("Resultaat na de training", "Result after the training")}</h3>
-                  <ul className="list-disc list-inside space-y-1">
-                    <li className="text-sm text-earth-muted leading-tight">{t("Verbeterde communicatievaardigheden", "Improved communication skills")}</li>
-                    <li className="text-sm text-earth-muted leading-tight">{t("Verhoogd zelfbewustzijn en persoonlijke groei", "Increased self-awareness and personal growth")}</li>
-                    <li className="text-sm text-earth-muted leading-tight">{t("Integratie van verkooptechnieken met eigen stijl", "Integration of sales techniques with own style")}</li>
-                  </ul>
+                <div className="w-full">
+                  <button
+                    onClick={() => setIsResultOpen(!isResultOpen)}
+                    className="flex items-center justify-between w-full text-left py-3 border-b border-black/10"
+                  >
+                    <span className="font-serif text-earth-accent text-lg">
+                      {t("Resultaat na de training", "Result after the training")}
+                    </span>
+                    <ChevronDown 
+                      size={18} 
+                      className={`text-earth-muted transition-transform ${isResultOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+                  
+                  <div className="pt-4 pb-2">
+                    {!isResultOpen ? (
+                      <div className="space-y-1">
+                        <p className="text-sm text-earth-muted leading-relaxed">
+                          {t("Verbeterde Communicatievaardigheden", "Improved Communication Skills")}
+                        </p>
+                        <p className="text-sm text-earth-muted leading-relaxed">
+                          {t("Verhoogd Zelfbewustzijn en Persoonlijke Groei", "Increased Self-Awareness and Personal Growth")}
+                        </p>
+                        <p className="text-sm text-earth-muted leading-relaxed">
+                          {t("Integratie van verkooptechnieken met eigen stijl", "Integration of sales techniques with own style")}
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        <div>
+                          <p className="text-sm font-medium text-earth-ink mb-1">
+                            {t("Verbeterde Communicatievaardigheden:", "Improved Communication Skills:")}
+                          </p>
+                          <p className="text-sm text-earth-muted leading-relaxed">
+                            {t(
+                              "Deelnemers leren effectiever en authentieker te communiceren, wat leidt tot betere klantrelaties en samenwerking binnen teams.",
+                              "Participants learn to communicate more effectively and authentically, leading to better customer relationships and collaboration within teams."
+                            )}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-earth-ink mb-1">
+                            {t("Verhoogd Zelfbewustzijn en Persoonlijke Groei:", "Increased Self-Awareness and Personal Growth:")}
+                          </p>
+                          <p className="text-sm text-earth-muted leading-relaxed">
+                            {t(
+                              "Door middel van reflectie en zelfontdekking ontwikkelen deelnemers een dieper inzicht in hun eigen gedrag en communicatiestijl, wat hen helpt om zelfverzekerder en doelgerichter te handelen.",
+                              "Through reflection and self-discovery, participants develop a deeper insight into their own behavior and communication style, which helps them act more confidently and purposefully."
+                            )}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-earth-ink mb-1">
+                            {t("Integratie van verkooptechnieken met eigen stijl:", "Integration of sales techniques with own style:")}
+                          </p>
+                          <p className="text-sm text-earth-muted leading-relaxed">
+                            {t(
+                              "Deelnemers leren hoe ze verkooptheorieën en technieken kunnen combineren met hun eigen authentieke stijl, wat resulteert in sterkere en duurzamere klantrelaties.",
+                              "Participants learn how to combine sales theories and techniques with their own authentic style, resulting in stronger and more sustainable customer relationships."
+                            )}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div className="px-2">
@@ -499,7 +558,7 @@ export default function App() {
                     <div className="flex justify-between border-b border-black/5 pb-3">
                       <span className="text-xs text-earth-muted uppercase tracking-wider">{t("Duur", "Duration")}</span>
                       <span className="text-sm text-earth-ink text-right">
-                        {t("Halve dag of hele dag", "Half day or full day")}
+                        {t("Halve dag, hele dag of traject", "Half day, full day or trajectory")}
                       </span>
                     </div>
 
