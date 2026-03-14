@@ -192,14 +192,15 @@ export default function App() {
   };
 
   const goBack = () => {
-    if (history.length > 1) {
-      const newHistory = [...history];
-      newHistory.pop();
-      setHistory(newHistory);
-      setCurrentPage(newHistory[newHistory.length - 1]);
-    } else {
+    setHistory(prev => {
+      if (prev.length > 1) {
+        const newHistory = prev.slice(0, -1);
+        setCurrentPage(newHistory[newHistory.length - 1]);
+        return newHistory;
+      }
       setCurrentPage('home');
-    }
+      return ['home'];
+    });
   };
 
   // Handle bottom nav clicks
@@ -392,7 +393,7 @@ export default function App() {
               className="page-transition bg-earth-bg z-10 p-6"
             >
               <button 
-                onClick={() => navigateTo('teamtraining')}
+                onClick={goBack}
                 className="flex items-center gap-2 text-earth-muted 
                 mb-8 hover:text-earth-accent transition-colors"
               >
@@ -637,7 +638,7 @@ export default function App() {
               className="page-transition bg-earth-bg z-10 p-6"
             >
               <button 
-                onClick={() => navigateTo('teamtraining')}
+                onClick={goBack}
                 className="flex items-center gap-2 text-earth-muted 
                 mb-8 hover:text-earth-accent transition-colors"
               >
@@ -850,7 +851,7 @@ export default function App() {
               className="page-transition bg-earth-bg z-10 p-6"
             >
               <button 
-                onClick={() => navigateTo('teamtraining')}
+                onClick={goBack}
                 className="flex items-center gap-2 text-earth-muted 
                 mb-8 hover:text-earth-accent transition-colors"
               >
