@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 
 // --- Types ---
-type Page = 'home' | 'coaching' | 'teamtraining' | 'teamtraining-tweedaagse' | 'teamtraining-losse-sessie' | 'teamtraining-traject-op-maat' | 'burnout' | 'contact' | 'reviews' | 'about' | 'sales-training';
+type Page = 'home' | 'coaching' | 'teamtraining' | 'teamtraining-tweedaagse' | 'teamtraining-losse-sessie' | 'teamtraining-traject-op-maat' | 'burnout' | 'contact' | 'reviews' | 'about' | 'sales-training' | 'communicatie-training' | 'teamdynamiek-training';
 
 interface TileProps {
   id: Page;
@@ -345,11 +345,13 @@ export default function App() {
                 {[
                   {
                     title: t("Communicatie Training", "Communication Training"),
-                    description: t("Effectiever samenwerken door bewust te regisseren in communicatie.", "Collaborate more effectively by consciously directing communication.")
+                    description: t("Effectiever samenwerken door bewust te regisseren in communicatie.", "Collaborate more effectively by consciously directing communication."),
+                    id: 'communicatie-training' as Page
                   },
                   {
                     title: t("Teamdynamiek & Samenwerking", "Team Dynamics & Collaboration"),
-                    description: t("Inzicht in teamdynamiek, boksen als metafoor voor communicatie, teambuilding. Sterker team, meer begrip, betere samenwerking.", "Insight into team dynamics, boxing as a metaphor for communication, teambuilding. Stronger team, more understanding, better collaboration.")
+                    description: t("Inzicht in teamdynamiek, boksen als metafoor voor communicatie, teambuilding. Sterker team, meer begrip, betere samenwerking.", "Insight into team dynamics, boxing as a metaphor for communication, teambuilding. Stronger team, more understanding, better collaboration."),
+                    id: 'teamdynamiek-training' as Page
                   },
                   {
                     title: t("Sales training", "Sales training"),
@@ -379,6 +381,432 @@ export default function App() {
             </motion.div>
           )}
 
+          {currentPage === 'communicatie-training' && (
+            <motion.div
+              key="communicatie-training"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="page-transition bg-earth-bg z-10 p-6"
+            >
+              <button 
+                onClick={() => navigateTo('teamtraining')}
+                className="flex items-center gap-2 text-earth-muted 
+                mb-8 hover:text-earth-accent transition-colors"
+              >
+                <ChevronLeft size={20} />
+                <span>Terug</span>
+              </button>
+
+              <div className="text-center mb-8 space-y-2">
+                <h2 className="text-3xl font-serif text-earth-accent">{t('Communicatie training', 'Communication training')}</h2>
+              </div>
+
+              <div className="space-y-8 text-earth-ink mb-12">
+                <div className="px-2">
+                  <p className="text-sm text-earth-muted leading-relaxed text-center max-w-sm mx-auto">
+                    {t(
+                      "Ontdek hoe je jouw communicatiestijl kunt verbeteren terwijl je werkt aan belangrijke thema's zoals samenwerken, feedback, vertrouwen en persoonlijk leiderschap. Je kiest een thema dat actueel is binnen jouw team en wij ontwikkelen een op maat gemaakte training.",
+                      "Discover how you can improve your communication style while working on important themes such as collaboration, feedback, trust and personal leadership. You choose a theme that is current within your team and we develop a tailor-made training."
+                    )}
+                  </p>
+                </div>
+
+                <iframe
+                  src="https://www.youtube.com/embed/-p0Y13xb11g"
+                  width="60%"
+                  style={{
+                    aspectRatio: '9/16',
+                    borderRadius: '16px',
+                    border: 'none',
+                    display: 'block',
+                    margin: '0 auto 24px auto'
+                  }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+
+                <div className="space-y-4">
+                  <h3 className="font-serif text-earth-accent text-lg text-center w-full mb-4">{t("Thema's", "Themes")}</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-earth-card p-6 rounded-2xl shadow-sm border border-black/5 flex flex-col items-center justify-center text-center gap-2">
+                      <span className="text-xs font-medium text-earth-ink text-center leading-tight">
+                        {t("Samenwerken", "Collaboration")}
+                      </span>
+                    </div>
+                    <div className="bg-earth-card p-6 rounded-2xl shadow-sm border border-black/5 flex flex-col items-center justify-center text-center gap-2">
+                      <span className="text-xs font-medium text-earth-ink text-center leading-tight">
+                        {t("Feedback & Feedforward", "Feedback & Feedforward")}
+                      </span>
+                    </div>
+                    <div className="bg-earth-card p-6 rounded-2xl shadow-sm border border-black/5 flex flex-col items-center justify-center text-center gap-2">
+                      <span className="text-xs font-medium text-earth-ink text-center leading-tight">
+                        {t("Vertrouwen", "Trust")}
+                      </span>
+                    </div>
+                    <div className="bg-earth-card p-6 rounded-2xl shadow-sm border border-black/5 flex flex-col items-center justify-center text-center gap-2">
+                      <span className="text-xs font-medium text-earth-ink text-center leading-tight">
+                        {t("Persoonlijk Leiderschap", "Personal Leadership")}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="w-full">
+                  <button
+                    onClick={() => setIsIomOpen(!isIomOpen)}
+                    className="flex items-center justify-center w-full text-center py-3 border-b border-black/10"
+                  >
+                    <span className="font-serif text-earth-accent text-lg text-center w-full">
+                      {t("Waarom boksen en de IOM-methode?", "Why boxing and the IOM method?")}
+                    </span>
+                    <ChevronDown 
+                      size={18} 
+                      className={`text-earth-muted transition-transform ${isIomOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+                  
+                  {isIomOpen && (
+                    <div className="pt-4 pb-2">
+                      <p className="text-sm text-earth-muted leading-relaxed whitespace-pre-line">
+                        {t(
+                          "Boksen is meer dan een fysieke sport. Het is een dynamisch spel van actie en reactie, strategie en timing. Net als in communicatie gaat het om duidelijkheid, respect en begrip. De IOM-methode voegt hier een cruciale laag aan toe: wie stuurt jouw reacties? De autopilot of de regisseur?",
+                          "Boxing is more than a physical sport. It is a dynamic game of action and reaction, strategy and timing. Just like in communication, it is about clarity, respect and understanding. The IOM method adds a crucial layer to this: who controls your reactions? The autopilot or the director?"
+                        )}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="w-full">
+                  <button
+                    onClick={() => setIsResultOpen(!isResultOpen)}
+                    className="flex items-center justify-center w-full text-center py-3 border-b border-black/10"
+                  >
+                    <span className="font-serif text-earth-accent text-lg text-center w-full mb-4">
+                      {t("Resultaat na de training", "Result after the training")}
+                    </span>
+                    <ChevronDown 
+                      size={18} 
+                      className={`text-earth-muted transition-transform ${isResultOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+                  
+                  <div className="pt-4 pb-2">
+                    {!isResultOpen ? (
+                      <div className="space-y-1">
+                        <p className="text-sm text-earth-muted leading-relaxed">
+                          {t("Verbeterde communicatievaardigheden", "Improved communication skills")}
+                        </p>
+                        <p className="text-sm text-earth-muted leading-relaxed">
+                          {t("Verhoogd zelfbewustzijn", "Increased self-awareness")}
+                        </p>
+                        <p className="text-sm text-earth-muted leading-relaxed">
+                          {t("Sterkere teamdynamiek", "Stronger team dynamics")}
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        <div>
+                          <p className="text-sm font-medium text-earth-ink mb-1">
+                            {t("Verbeterde communicatievaardigheden:", "Improved communication skills:")}
+                          </p>
+                          <p className="text-sm text-earth-muted leading-relaxed">
+                            {t(
+                              "Deelnemers leren effectiever en authentieker te communiceren.",
+                              "Participants learn to communicate more effectively and authentically."
+                            )}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-earth-ink mb-1">
+                            {t("Verhoogd zelfbewustzijn:", "Increased self-awareness:")}
+                          </p>
+                          <p className="text-sm text-earth-muted leading-relaxed">
+                            {t(
+                              "Door reflectie ontwikkelen deelnemers inzicht in hun eigen communicatiestijl.",
+                              "Through reflection, participants develop insight into their own communication style."
+                            )}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-earth-ink mb-1">
+                            {t("Sterkere teamdynamiek:", "Stronger team dynamics:")}
+                          </p>
+                          <p className="text-sm text-earth-muted leading-relaxed">
+                            {t(
+                              "Teams leren elkaars stijlen kennen en samenwerken vanuit begrip en vertrouwen.",
+                              "Teams learn to know each other's styles and work together from understanding and trust."
+                            )}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="px-2">
+                  <div className="w-full space-y-3">
+                    <h3 className="font-serif text-earth-accent text-lg text-center w-full mb-4">
+                      {t("Praktische informatie", "Practical information")}
+                    </h3>
+                    
+                    <div className="flex justify-between border-b border-black/5 pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider">{t("Duur", "Duration")}</span>
+                      <span className="text-sm text-earth-ink text-right">
+                        {t("2 uur, halve dag of hele dag", "2 hours, half day or full day")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between border-b border-black/5 pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider">{t("Locatie", "Location")}</span>
+                      <span className="text-sm text-earth-ink text-right">
+                        {t("Door heel Nederland", "Throughout the Netherlands")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between border-b border-black/5 pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider">{t("Deelnemers", "Participants")}</span>
+                      <span className="text-sm text-earth-ink text-right">
+                        {t("Minimaal 6", "Minimum 6")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider">{t("Prijs", "Price")}</span>
+                      <span className="text-sm text-earth-ink text-right">
+                        {t("Op maat", "Custom")}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-center">
+                <button 
+                  onClick={() => navigateTo('contact')}
+                  className="w-full max-w-xs bg-earth-primary text-white px-6 py-4 rounded-full font-medium text-center shadow-lg hover:shadow-xl transition-all active:scale-95"
+                >
+                  {t('Meer info / Aanvragen', 'More info / Request')}
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {currentPage === 'teamdynamiek-training' && (
+            <motion.div
+              key="teamdynamiek-training"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="page-transition bg-earth-bg z-10 p-6"
+            >
+              <button 
+                onClick={() => navigateTo('teamtraining')}
+                className="flex items-center gap-2 text-earth-muted 
+                mb-8 hover:text-earth-accent transition-colors"
+              >
+                <ChevronLeft size={20} />
+                <span>Terug</span>
+              </button>
+
+              <div className="text-center mb-8 space-y-2">
+                <h2 className="text-3xl font-serif text-earth-accent">{t('Teamdynamiek & Samenwerking', 'Team Dynamics & Collaboration')}</h2>
+              </div>
+
+              <div className="space-y-8 text-earth-ink mb-12">
+                <div className="px-2">
+                  <p className="text-sm text-earth-muted leading-relaxed text-center max-w-sm mx-auto">
+                    {t(
+                      "Wil jij een positieve werksfeer en een effectief team creëren? Tijdens op maat gemaakte interactieve sessies worden persoonlijke inzichten gecombineerd met boksen, waarbij respect, vertrouwen en communicatie centraal staan. Samen creëren we krachtigere samenwerking en blijvende resultaten.",
+                      "Do you want to create a positive work atmosphere and an effective team? During tailor-made interactive sessions, personal insights are combined with boxing, where respect, trust and communication are central. Together we create stronger collaboration and lasting results."
+                    )}
+                  </p>
+                </div>
+
+                <iframe
+                  src="https://www.youtube.com/embed/73E89pJaDWs"
+                  width="60%"
+                  style={{
+                    aspectRatio: '9/16',
+                    borderRadius: '16px',
+                    border: 'none',
+                    display: 'block',
+                    margin: '0 auto 24px auto'
+                  }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+
+                <div className="space-y-4">
+                  <h3 className="font-serif text-earth-accent text-lg text-center w-full mb-4">{t("Thema's", "Themes")}</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-earth-card p-6 rounded-2xl shadow-sm border border-black/5 flex flex-col items-center justify-center text-center gap-2">
+                      <span className="text-xs font-medium text-earth-ink text-center leading-tight">
+                        {t("Teamdynamiek", "Team Dynamics")}
+                      </span>
+                    </div>
+                    <div className="bg-earth-card p-6 rounded-2xl shadow-sm border border-black/5 flex flex-col items-center justify-center text-center gap-2">
+                      <span className="text-xs font-medium text-earth-ink text-center leading-tight">
+                        {t("Communicatiestijlen", "Communication Styles")}
+                      </span>
+                    </div>
+                    <div className="bg-earth-card p-6 rounded-2xl shadow-sm border border-black/5 flex flex-col items-center justify-center text-center gap-2">
+                      <span className="text-xs font-medium text-earth-ink text-center leading-tight">
+                        {t("Samenwerking & Feedback", "Collaboration & Feedback")}
+                      </span>
+                    </div>
+                    <div className="bg-earth-card p-6 rounded-2xl shadow-sm border border-black/5 flex flex-col items-center justify-center text-center gap-2">
+                      <span className="text-xs font-medium text-earth-ink text-center leading-tight">
+                        {t("Teamambities", "Team Ambitions")}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="w-full">
+                  <button
+                    onClick={() => setIsIomOpen(!isIomOpen)}
+                    className="flex items-center justify-center w-full text-center py-3 border-b border-black/10"
+                  >
+                    <span className="font-serif text-earth-accent text-lg text-center w-full">
+                      {t("Waarom boksen en de IOM-methode?", "Why boxing and the IOM method?")}
+                    </span>
+                    <ChevronDown 
+                      size={18} 
+                      className={`text-earth-muted transition-transform ${isIomOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+                  
+                  {isIomOpen && (
+                    <div className="pt-4 pb-2">
+                      <p className="text-sm text-earth-muted leading-relaxed whitespace-pre-line">
+                        {t(
+                          "Boksen is niet alleen een fysieke activiteit, het is een krachtige metafoor voor communicatie. In de boksring leer je snel reageren of vertragen, situaties inschatten, en je eigen grenzen respecteren. De IOM-methode voegt hier een cruciale laag aan toe: wie stuurt jouw reacties? De autopilot of de regisseur?",
+                          "Boxing is not just a physical activity, it is a powerful metaphor for communication. In the boxing ring you learn to react quickly or slow down, assess situations, and respect your own boundaries. The IOM method adds a crucial layer to this: who controls your reactions? The autopilot or the director?"
+                        )}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="w-full">
+                  <button
+                    onClick={() => setIsResultOpen(!isResultOpen)}
+                    className="flex items-center justify-center w-full text-center py-3 border-b border-black/10"
+                  >
+                    <span className="font-serif text-earth-accent text-lg text-center w-full mb-4">
+                      {t("Wat kun je verwachten?", "What can you expect?")}
+                    </span>
+                    <ChevronDown 
+                      size={18} 
+                      className={`text-earth-muted transition-transform ${isResultOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+                  
+                  <div className="pt-4 pb-2">
+                    {!isResultOpen ? (
+                      <div className="space-y-1">
+                        <p className="text-sm text-earth-muted leading-relaxed">
+                          {t("Onderzoeken en ervaren", "Explore and experience")}
+                        </p>
+                        <p className="text-sm text-earth-muted leading-relaxed">
+                          {t("Kennis en theorie", "Knowledge and theory")}
+                        </p>
+                        <p className="text-sm text-earth-muted leading-relaxed">
+                          {t("Reflectie", "Reflection")}
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        <div>
+                          <p className="text-sm font-medium text-earth-ink mb-1">
+                            {t("Onderzoeken en ervaren:", "Explore and experience:")}
+                          </p>
+                          <p className="text-sm text-earth-muted leading-relaxed">
+                            {t(
+                              "Door interactieve boksoefeningen ervaar je meteen de impact van je communicatie.",
+                              "Through interactive boxing exercises you immediately experience the impact of your communication."
+                            )}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-earth-ink mb-1">
+                            {t("Kennis en theorie:", "Knowledge and theory:")}
+                          </p>
+                          <p className="text-sm text-earth-muted leading-relaxed">
+                            {t(
+                              "Theorie die aanzet tot nieuwe inzichten in combinatie met het onderzoeken en ervaren.",
+                              "Theory that encourages new insights in combination with exploring and experiencing."
+                            )}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-earth-ink mb-1">
+                            {t("Reflectie:", "Reflection:")}
+                          </p>
+                          <p className="text-sm text-earth-muted leading-relaxed">
+                            {t(
+                              "Bewust even stilstaan en vertragen.",
+                              "Consciously pause and slow down."
+                            )}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="px-2">
+                  <div className="w-full space-y-3">
+                    <h3 className="font-serif text-earth-accent text-lg text-center w-full mb-4">
+                      {t("Praktische informatie", "Practical information")}
+                    </h3>
+                    
+                    <div className="flex justify-between border-b border-black/5 pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider">{t("Duur", "Duration")}</span>
+                      <span className="text-sm text-earth-ink text-right">
+                        {t("Op maat, meerdere sessies", "Custom, multiple sessions")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between border-b border-black/5 pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider">{t("Locatie", "Location")}</span>
+                      <span className="text-sm text-earth-ink text-right">
+                        {t("Door heel Nederland", "Throughout the Netherlands")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between border-b border-black/5 pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider">{t("Deelnemers", "Participants")}</span>
+                      <span className="text-sm text-earth-ink text-right">
+                        {t("Minimaal 6", "Minimum 6")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider">{t("Prijs", "Price")}</span>
+                      <span className="text-sm text-earth-ink text-right">
+                        {t("Op maat", "Custom")}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-center">
+                <button 
+                  onClick={() => navigateTo('contact')}
+                  className="w-full max-w-xs bg-earth-primary text-white px-6 py-4 rounded-full font-medium text-center shadow-lg hover:shadow-xl transition-all active:scale-95"
+                >
+                  {t('Meer info / Aanvragen', 'More info / Request')}
+                </button>
+              </div>
+            </motion.div>
+          )}
+
           {currentPage === 'sales-training' && (
             <motion.div
               key="sales-training"
@@ -390,7 +818,8 @@ export default function App() {
             >
               <button 
                 onClick={() => navigateTo('teamtraining')}
-                className="flex items-center gap-2 text-earth-muted mb-8 hover:text-earth-accent transition-colors"
+                className="flex items-center gap-2 text-earth-muted 
+                mb-8 hover:text-earth-accent transition-colors"
               >
                 <ChevronLeft size={20} />
                 <span>Terug</span>
@@ -401,7 +830,7 @@ export default function App() {
               </div>
 
               <iframe
-                src="https://www.youtube.com/embed/73E89pJaDWs"
+                src="https://www.youtube.com/embed/c-2SF0MsIvU"
                 width="60%"
                 style={{aspectRatio: '9/16', borderRadius: '16px', border: 'none', display: 'block', margin: '0 auto 24px auto'}}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -445,7 +874,7 @@ export default function App() {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-serif text-earth-accent px-2">{t("Thema's", "Themes")}</h3>
+                  <h3 className="font-serif text-earth-accent text-lg text-center w-full mb-4">{t("Thema's", "Themes")}</h3>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="bg-earth-card p-6 rounded-2xl shadow-sm border border-black/5 flex flex-col items-center justify-center text-center gap-2">
                       <span className="text-xs font-medium text-earth-ink text-center leading-tight">
@@ -485,9 +914,9 @@ export default function App() {
                 <div className="w-full">
                   <button
                     onClick={() => setIsResultOpen(!isResultOpen)}
-                    className="flex items-center justify-between w-full text-left py-3 border-b border-black/10"
+                    className="flex items-center justify-center w-full text-center py-3 border-b border-black/10"
                   >
-                    <span className="font-serif text-earth-accent text-lg">
+                    <span className="font-serif text-earth-accent text-lg text-center w-full mb-4">
                       {t("Resultaat na de training", "Result after the training")}
                     </span>
                     <ChevronDown 
@@ -551,7 +980,7 @@ export default function App() {
 
                 <div className="px-2">
                   <div className="w-full space-y-3">
-                    <h3 className="font-serif text-earth-accent text-lg mb-4">
+                    <h3 className="font-serif text-earth-accent text-lg text-center w-full mb-4">
                       {t("Praktische informatie", "Practical information")}
                     </h3>
                     
