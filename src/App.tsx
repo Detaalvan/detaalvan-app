@@ -182,6 +182,7 @@ export default function App() {
   const [lang, setLang] = useState<'nl' | 'en'>('nl');
   const [isIomOpen, setIsIomOpen] = useState(false);
   const [isResultOpen, setIsResultOpen] = useState(false);
+  const [isLeidinggevendenOpen, setIsLeidinggevendenOpen] = useState(false);
 
   const t = (nl: string, en: string) => lang === 'nl' ? nl : en;
 
@@ -401,18 +402,15 @@ export default function App() {
 
               <div className="text-center mb-8 space-y-2">
                 <h2 className="text-3xl font-serif text-earth-accent">{t('Communicatie training', 'Communication training')}</h2>
+                <p className="text-sm text-earth-muted italic text-center">
+                  {t(
+                    "Communicatie in Beweging: Verbeter jouw communicatievaardigheden met boksen als metafoor",
+                    "Communication in Motion: Improve your communication skills with boxing as a metaphor"
+                  )}
+                </p>
               </div>
 
               <div className="space-y-8 text-earth-ink mb-12">
-                <div className="px-2">
-                  <p className="text-sm text-earth-muted leading-relaxed text-center max-w-sm mx-auto">
-                    {t(
-                      "Ontdek hoe je jouw communicatiestijl kunt verbeteren terwijl je werkt aan belangrijke thema's zoals samenwerken, feedback, vertrouwen en persoonlijk leiderschap. Je kiest een thema dat actueel is binnen jouw team en wij ontwikkelen een op maat gemaakte training.",
-                      "Discover how you can improve your communication style while working on important themes such as collaboration, feedback, trust and personal leadership. You choose a theme that is current within your team and we develop a tailor-made training."
-                    )}
-                  </p>
-                </div>
-
                 <iframe
                   src="https://www.youtube.com/embed/-p0Y13xb11g"
                   width="60%"
@@ -426,6 +424,41 @@ export default function App() {
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />
+
+                <div className="px-2">
+                  <p className="text-sm text-earth-muted leading-relaxed text-center max-w-sm mx-auto">
+                    {t(
+                      "Welkom bij onze dynamische en innovatieve communicatietrainingen, waarin boksen wordt ingezet als krachtige metafoor. Ontdek hoe je jouw communicatiestijl kunt verbeteren terwijl je werkt aan belangrijke thema's zoals samenwerken, feedback, vertrouwen en persoonlijk leiderschap. Je kiest een thema dat actueel is binnen jouw team, en wij ontwikkelen een fantastische, op maat gemaakte training.",
+                      "Welcome to our dynamic and innovative communication training, in which boxing is used as a powerful metaphor. Discover how you can improve your communication style while working on important themes such as collaboration, feedback, trust and personal leadership. You choose a theme that is current within your team, and we develop a fantastic, tailor-made training."
+                    )}
+                  </p>
+                </div>
+
+                <div className="w-full">
+                  <button
+                    onClick={() => setIsLeidinggevendenOpen(!isLeidinggevendenOpen)}
+                    className="flex items-center justify-center w-full text-center py-3 border-b border-black/10"
+                  >
+                    <span className="font-serif text-earth-accent text-lg text-center w-full">
+                      {t("Voor leidinggevenden", "For managers")}
+                    </span>
+                    <ChevronDown 
+                      size={18} 
+                      className={`text-earth-muted transition-transform ${isLeidinggevendenOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+                  
+                  {isLeidinggevendenOpen && (
+                    <div className="pt-4 pb-2">
+                      <p className="text-sm text-earth-muted leading-relaxed whitespace-pre-line">
+                        {t(
+                          "Na elke training deelt de trainer waardevolle inzichten met de leidinggevende, waardoor deze in staat is om effectiever te sturen en de samenwerking op een krachtige en positieve manier te versterken.",
+                          "After each training, the trainer shares valuable insights with the manager, enabling them to steer more effectively and strengthen the collaboration in a powerful and positive way."
+                        )}
+                      </p>
+                    </div>
+                  )}
+                </div>
 
                 <div className="space-y-4">
                   <h3 className="font-serif text-earth-accent text-lg text-center w-full mb-4">{t("Thema's", "Themes")}</h3>
@@ -471,8 +504,8 @@ export default function App() {
                     <div className="pt-4 pb-2">
                       <p className="text-sm text-earth-muted leading-relaxed whitespace-pre-line">
                         {t(
-                          "Boksen is meer dan een fysieke sport. Het is een dynamisch spel van actie en reactie, strategie en timing. Net als in communicatie gaat het om duidelijkheid, respect en begrip. De IOM-methode voegt hier een cruciale laag aan toe: wie stuurt jouw reacties? De autopilot of de regisseur?",
-                          "Boxing is more than a physical sport. It is a dynamic game of action and reaction, strategy and timing. Just like in communication, it is about clarity, respect and understanding. The IOM method adds a crucial layer to this: who controls your reactions? The autopilot or the director?"
+                          "Boksen is meer dan een fysieke sport. Het is een dynamisch spel van actie en reactie, strategie en timing. Net als in de ring draait het in interactie om observatie, timing, actie en reactie. Het achterhalen van de behoeften van de klant staat daarbij centraal.\n\nDe IOM-methode voegt hier een cruciale laag aan toe. Waar boksen de buitenkant traint: reactie, timing en samenwerking. Richt de IOM-methode zich op de binnenkant: het innerlijk dialoog. Wie stuurt jouw reacties? De autopilot of de regisseur? Door bewust te leren schakelen tussen hoofd, hart en lijf worden interacties authentieker, effectiever en duurzamer.",
+                          "Boxing is more than a physical sport. It is a dynamic game of action and reaction, strategy and timing. Just like in the ring, interaction is all about observation, timing, action and reaction. Finding out the customer's needs is central to this.\n\nThe IOM method adds a crucial layer to this. Where boxing trains the outside: reaction, timing and cooperation. The IOM method focuses on the inside: the inner dialogue. Who controls your reactions? The autopilot or the director? By learning to consciously switch between head, heart and body, interactions become more authentic, effective and sustainable."
                         )}
                       </p>
                     </div>
@@ -1103,8 +1136,8 @@ export default function App() {
               imageUrl="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=13;908;2891;841,width=960,height=1280/image/404499409/3473e8e5-c864-4275-804c-e3514e40ced0.jpg"
               imageStyle={{ objectPosition: 'center 5%' }}
               content={t(
-                "Sjoerd Kersten is psychomotorisch therapeut, coach en trainer met duizenden uren ervaring. Hij werkt met professionals, teams en organisaties aan één centrale vraag: wie stuurt jou, en wanneer stuur jij zelf?\n\nMet een achtergrond in de ziekenhuis psychiatrie en 8 jaar als ondernemer combineert Sjoerd Kersten psychomotorische therapie, biofeedback en de IOM-methode tot een aanpak die lichaam, hoofd en hart samenbrengt. Direct, holistisch en gericht op blijvende verandering.",
-                "Sjoerd Kersten is a psychomotor therapist, coach and trainer with thousands of hours of experience. He works with professionals, teams and organizations on one central question: who directs you, and when do you direct yourself?\n\nWith a background in hospital psychiatry and 8 years as an entrepreneur, Sjoerd Kersten combines psychomotor therapy, biofeedback and the IOM method into an approach that brings body, head and heart together. Direct, holistic and focused on lasting change."
+                "Sjoerd Kersten is psychomotorisch therapeut, coach en trainer met duizenden uren ervaring. Hij werkt met professionals, teams en organisaties aan één centrale vraag: wie stuurt jou, en wanneer stuur jij zelf?\n\nMet een achtergrond in de ziekenhuis psychiatrie en 8 jaar ervaring als ondernemer combineert Sjoerd Kersten psychomotorische therapie, biofeedback en de IOM-methode tot een aanpak die lichaam, hoofd en hart samenbrengt. Direct, holistisch en gericht op blijvende verandering.",
+                "Sjoerd Kersten is a psychomotor therapist, coach and trainer with thousands of hours of experience. He works with professionals, teams and organizations on one central question: who directs you, and when do you direct yourself?\n\nWith a background in hospital psychiatry and 8 years of experience as an entrepreneur, Sjoerd Kersten combines psychomotor therapy, biofeedback and the IOM method into an approach that brings body, head and heart together. Direct, holistic and focused on lasting change."
               )}
               onBack={goBack}
               ctaText={t('Stuur een bericht', 'Send a message')}
