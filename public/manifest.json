@@ -1,9 +1,9 @@
 {
-  "name": "DeTaalVan",
-  "id": "/",
+  "name": "DeTaalVan Mobiel",
   "short_name": "DeTaalVan",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "/detaalvan-app/",
+  "scope": "/detaalvan-app/",
+  "id": "/detaalvan-app/",
   "display": "standalone",
   "background_color": "#F5F0EB",
   "theme_color": "#233652",
