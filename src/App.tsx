@@ -19,11 +19,14 @@ import {
   Instagram,
   Linkedin,
   MessageCircle,
-  Calendar
+  Calendar,
+  RefreshCw,
+  Lightbulb,
+  Hand
 } from 'lucide-react';
 
 // --- Types ---
-type Page = 'home' | 'coaching' | 'teamtraining' | 'teamtraining-tweedaagse' | 'teamtraining-losse-sessie' | 'teamtraining-traject-op-maat' | 'burnout' | 'contact' | 'reviews' | 'about' | 'sales-training' | 'communicatie-training' | 'teamdynamiek-training';
+type Page = 'home' | 'coaching' | 'teamtraining' | 'teamtraining-tweedaagse' | 'teamtraining-losse-sessie' | 'teamtraining-traject-op-maat' | 'burnout' | 'contact' | 'reviews' | 'about' | 'sales-training' | 'communicatie-training' | 'teamdynamiek-training' | 'reintegratie' | 'iom-methode';
 
 interface TileProps {
   id: Page;
@@ -183,6 +186,9 @@ export default function App() {
   const [isIomOpen, setIsIomOpen] = useState(false);
   const [isResultOpen, setIsResultOpen] = useState(false);
   const [isLeidinggevendenOpen, setIsLeidinggevendenOpen] = useState(false);
+  const [isVastlooptOpen, setIsVastlooptOpen] = useState(false);
+  const [isVoorWieOpen, setIsVoorWieOpen] = useState(false);
+  const [isReintegratieResultOpen, setIsReintegratieResultOpen] = useState(false);
 
   const t = (nl: string, en: string) => lang === 'nl' ? nl : en;
 
@@ -267,6 +273,18 @@ export default function App() {
                 <Tile id="coaching" icon={<Brain />} label="Coaching" onClick={navigateTo} />
                 <Tile id="teamtraining" icon={<Users />} label={t('Teamtraining', 'Team Training')} onClick={navigateTo} />
                 <Tile id="burnout" icon={<Flame />} label="Burn-out" onClick={navigateTo} />
+                <Tile id="reintegratie" icon={<RefreshCw />} label="Re-integratie" onClick={navigateTo} />
+                <Tile 
+                  id="iom-methode"
+                  icon={
+                    <div className="relative flex flex-col items-center">
+                      <Brain size={20} className="text-earth-primary" />
+                      <Hand size={20} className="text-earth-primary mt-[-4px]" />
+                    </div>
+                  }
+                  label="IOM methode"
+                  onClick={navigateTo}
+                />
                 <Tile id="contact" icon={<MessageSquare />} label="Contact" onClick={navigateTo} />
                 <Tile id="reviews" icon={<Star />} label="Reviews" onClick={navigateTo} />
                 <Tile id="about" icon={<Info />} label={t('Over Sjoerd', 'About Sjoerd')} onClick={navigateTo} />
@@ -274,6 +292,281 @@ export default function App() {
 
               <div className="pt-4">
                 <GoogleReviewBadge />
+              </div>
+            </motion.div>
+          )}
+
+          {currentPage === 'reintegratie' && (
+            <motion.div
+              key="reintegratie"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="page-transition bg-earth-bg z-10 p-6"
+            >
+              <button 
+                onClick={goBack}
+                className="flex items-center gap-2 text-earth-muted mb-8 hover:text-earth-accent transition-colors"
+              >
+                <ChevronLeft size={20} />
+                <span>Terug</span>
+              </button>
+
+              <div className="text-center mb-8 space-y-2">
+                <h2 className="text-3xl font-serif text-earth-accent">
+                  {t("Van inzicht naar actie in re-integratie", "From insight to action in re-integration")}
+                </h2>
+                <p className="text-sm text-earth-muted italic">
+                  {t(
+                    "Een aanvullende, praktische en activerende aanpak die cliënten helpt met inzicht om te zetten in duurzaam gedrag richting werk.",
+                    "An additional, practical and activating approach that helps clients translate insight into sustainable behavior towards work."
+                  )}
+                </p>
+              </div>
+
+              <div className="space-y-8 text-earth-ink mb-12">
+                <div className="px-2">
+                  <p className="text-sm text-earth-muted leading-relaxed text-center max-w-sm mx-auto">
+                    {t(
+                      "Binnen re-integratietrajecten wordt vaak gewerkt aan inzicht, structuur en opbouw. Toch blijkt in de praktijk dat dit niet altijd automatisch leidt tot consistent gedrag richting werk.\n\nCoaching met de Image of the Mind (IOM)-methode richt zich op dit overgangspunt. Het moment waarop iemand weet wat nodig is, maar dit nog niet volledig weet om te zetten in actie.",
+                      "Within re-integration processes, work is often done on insight, structure and build-up. However, practice shows that this does not always automatically lead to consistent behavior towards work.\n\nCoaching with the Image of the Mind (IOM) method focuses on this transition point. The moment when someone knows what is needed, but does not yet fully know how to translate this into action."
+                    )}
+                  </p>
+                </div>
+
+                <div className="w-full">
+                  <button
+                    onClick={() => setIsVastlooptOpen(!isVastlooptOpen)}
+                    className="flex items-center justify-center w-full text-center py-3 border-b border-black/10"
+                  >
+                    <span className="font-serif text-earth-accent text-lg text-center w-full">
+                      {t("Waar het vaak vastloopt", "Where it often gets stuck")}
+                    </span>
+                    <ChevronDown 
+                      size={18} 
+                      className={`text-earth-muted transition-transform ${isVastlooptOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+                  
+                  <div className="pt-4 pb-2">
+                    {isVastlooptOpen && (
+                      <div className="space-y-2">
+                        <p className="text-sm text-earth-muted text-center">
+                          {t("• Terugval en uitval", "• Relapse and dropout")}
+                        </p>
+                        <p className="text-sm text-earth-muted text-center">
+                          {t("• Blokkades in gesprekken", "• Blocks in conversations")}
+                        </p>
+                        <p className="text-sm text-earth-muted text-center">
+                          {t("• Vermijding, overdenken, perfectionisme", "• Avoidance, overthinking, perfectionism")}
+                        </p>
+                        <p className="text-sm text-earth-muted text-center">
+                          {t("• Twijfel of spanning (vaak rondom solliciteren)", "• Doubt or tension (often around applying)")}
+                        </p>
+                        <p className="text-sm text-earth-muted text-center">
+                          {t("• Moeite om inzicht om te zetten naar duurzame gedragsverandering", "• Difficulty translating insight into sustainable behavioral change")}
+                        </p>
+                        
+                        <div className="h-4" /> {/* Lege regel */}
+                        
+                        <p className="text-sm text-earth-muted text-center">
+                          {t(
+                            "Dit zijn geen onwil of onkunde, maar processen die samenhangen met hoe gedrag tot stand komt.",
+                            "These are not unwillingness or incompetence, but processes related to how behavior is established."
+                          )}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="w-full">
+                  <button
+                    onClick={() => setIsReintegratieResultOpen(!isReintegratieResultOpen)}
+                    className="flex items-center justify-center w-full text-center py-3 border-b border-black/10"
+                  >
+                    <span className="font-serif text-earth-accent text-lg text-center w-full">
+                      {t("Wat het oplevert", "What it delivers")}
+                    </span>
+                    <ChevronDown 
+                      size={18} 
+                      className={`text-earth-muted transition-transform ${isReintegratieResultOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+                  
+                  <div className="pt-4 pb-2">
+                    {!isReintegratieResultOpen ? (
+                      <div className="space-y-1">
+                        <p className="text-sm text-earth-muted text-center">
+                          {t("Meer grip op hun gedrag", "More grip on their behavior")}
+                        </p>
+                        <p className="text-sm text-earth-muted text-center">
+                          {t("Consistentie in actie richting werk", "Consistency in action towards work")}
+                        </p>
+                        <p className="text-sm text-earth-muted text-center">
+                          {t("Stabiliteit bij tegenslag", "Stability in case of setback")}
+                        </p>
+                        <p className="text-sm text-earth-muted text-center">
+                          {t("Meer zelfstandigheid in hun proces", "More independence in their process")}
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        <div className="flex flex-col items-center">
+                          <p className="text-sm font-medium text-earth-ink text-center">
+                            {t("Meer grip op hun gedrag", "More grip on their behavior")}
+                          </p>
+                          <p className="text-xs text-earth-muted text-center mt-1 mb-3">
+                            {t(
+                              "Cliënten leren herkennen wat hun gedrag stuurt en kunnen daar bewust op sturen. Dat geeft rust én richting.",
+                              "Clients learn to recognize what drives their behavior and can consciously steer it. That gives peace and direction."
+                            )}
+                          </p>
+                        </div>
+                        <div className="flex flex-col items-center">
+                          <p className="text-sm font-medium text-earth-ink text-center">
+                            {t("Consistentie in actie richting werk", "Consistency in action towards work")}
+                          </p>
+                          <p className="text-xs text-earth-muted text-center mt-1 mb-3">
+                            {t(
+                              "Niet alleen goede dagen benutten, maar ook op moeilijke momenten in beweging blijven. Dat is waar duurzame re-integratie begint.",
+                              "Not only using good days, but also staying in motion at difficult moments. That is where sustainable re-integration begins."
+                            )}
+                          </p>
+                        </div>
+                        <div className="flex flex-col items-center">
+                          <p className="text-sm font-medium text-earth-ink text-center">
+                            {t("Stabiliteit bij tegenslag", "Stability in case of setback")}
+                          </p>
+                          <p className="text-xs text-earth-muted text-center mt-1 mb-3">
+                            {t(
+                              "Een afwijzing, een lastig gesprek of een terugval hoeft geen einde te zijn. Cliënten leren hierop anticiperen en er doorheen te bewegen.",
+                              "A rejection, a difficult conversation or a relapse does not have to be an end. Clients learn to anticipate and move through it."
+                            )}
+                          </p>
+                        </div>
+                        <div className="flex flex-col items-center">
+                          <p className="text-sm font-medium text-earth-ink text-center">
+                            {t("Meer zelfstandigheid in hun proces", "More independence in their process")}
+                          </p>
+                          <p className="text-xs text-earth-muted text-center mt-1 mb-3">
+                            {t(
+                              "Minder afhankelijk van begeleiding, motivatie of de juiste stemming. Cliënten nemen het roer zelf in handen.",
+                              "Less dependent on guidance, motivation or the right mood. Clients take the helm themselves."
+                            )}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="font-serif text-earth-accent text-lg text-center w-full mb-4">{t("Thema's", "Themes")}</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    {[
+                      { nl: "Zelfvertrouwen in handelen", en: "Confidence in acting" },
+                      { nl: "Stressregulatie en omgaan met druk", en: "Stress regulation and dealing with pressure" },
+                      { nl: "Doorbreken van patronen in denken, voelen en doen", en: "Breaking patterns in thinking, feeling and doing" },
+                      { nl: "Omgaan met afwijzing", en: "Dealing with rejection" },
+                      { nl: "Vergroten van eigenaarschap en regie", en: "Increasing ownership and control" },
+                      { nl: "Duurzaam functioneren op de werkvloer", en: "Sustainable functioning in the workplace" }
+                    ].map((item, index) => (
+                      <div 
+                        key={index} 
+                        className="bg-earth-card p-4 rounded-2xl shadow-sm border border-black/5 flex items-center justify-center text-center h-24"
+                      >
+                        <span className="text-xs font-medium text-earth-ink leading-tight">
+                          {t(item.nl, item.en)}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="w-full">
+                  <button
+                    onClick={() => setIsVoorWieOpen(!isVoorWieOpen)}
+                    className="flex items-center justify-center w-full text-center py-3 border-b border-black/10"
+                  >
+                    <span className="font-serif text-earth-accent text-lg text-center w-full">
+                      {t("Voor wie", "For whom")}
+                    </span>
+                    <ChevronDown 
+                      size={18} 
+                      className={`text-earth-muted transition-transform ${isVoorWieOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+                  
+                  <div className="pt-4 pb-2">
+                    <div className="space-y-2">
+                      <p className="text-sm text-earth-muted text-center">
+                        {t("Gebaat zijn bij een aanpak die verder gaat dan alleen praten", "Benefit from an approach that goes beyond just talking")}
+                      </p>
+                      <p className="text-sm text-earth-muted text-center">
+                        {t("Vastlopen in het proces", "Getting stuck in the process")}
+                      </p>
+                      <p className="text-sm text-earth-muted text-center">
+                        {t("Moeite hebben met het omzetten van inzicht naar actie", "Having difficulty translating insight into action")}
+                      </p>
+                      <p className="text-sm text-earth-muted text-center">
+                        {t("Last hebben van stress, spanning of onzekerheid", "Suffering from stress, tension or uncertainty")}
+                      </p>
+                      <p className="text-sm text-earth-muted text-center">
+                        {t("Ondersteuning nodig hebben in het vasthouden van ontwikkeling", "Need support in maintaining development")}
+                      </p>
+                      <p className="text-sm text-earth-muted text-center">
+                        {t("Willen werken aan duurzame inzetbaarheid", "Want to work on sustainable employability")}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="px-2">
+                  <div className="w-full space-y-3">
+                    <h3 className="font-serif text-earth-accent text-lg text-center w-full mb-4">
+                      {t("Praktische informatie", "Practical information")}
+                    </h3>
+                    
+                    <div className="flex justify-between border-b border-black/5 pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider">{t("AANPAK", "APPROACH")}</span>
+                      <span className="text-sm text-earth-ink text-right">
+                        {t("Praktisch en direct toepasbaar", "Practical and directly applicable")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between border-b border-black/5 pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider">{t("INZET", "DEPLOYMENT")}</span>
+                      <span className="text-sm text-earth-ink text-right">
+                        {t("Naast bestaande trajecten", "Alongside existing processes")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between border-b border-black/5 pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider">{t("LOCATIE", "LOCATION")}</span>
+                      <span className="text-sm text-earth-ink text-right">
+                        {t("Door heel Nederland", "Throughout the Netherlands")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider">{t("DOELGROEP", "TARGET GROUP")}</span>
+                      <span className="text-sm text-earth-ink text-right">
+                        {t("Op maat per casus", "Tailor-made per case")}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-center">
+                <button 
+                  onClick={() => navigateTo('contact')}
+                  className="w-full max-w-xs bg-earth-primary text-white px-6 py-4 rounded-full font-medium text-center shadow-lg hover:shadow-xl transition-all active:scale-95"
+                >
+                  {t('Plan een kennismaking', 'Schedule an introduction')}
+                </button>
               </div>
             </motion.div>
           )}
@@ -505,8 +798,8 @@ export default function App() {
                     <div className="pt-4 pb-2">
                       <p className="text-sm text-earth-muted leading-relaxed whitespace-pre-line">
                         {t(
-                          "Boksen is meer dan een fysieke sport. Het is een dynamisch spel van actie en reactie, strategie en timing. Net als in de ring draait het in interactie om observatie, timing, actie en reactie. Het achterhalen van de behoeften van de klant staat daarbij centraal.\n\nDe IOM-methode voegt hier een cruciale laag aan toe. Waar boksen de buitenkant traint: reactie, timing en samenwerking. Richt de IOM-methode zich op de binnenkant: het innerlijk dialoog. Wie stuurt jouw reacties? De autopilot of de regisseur? Door bewust te leren schakelen tussen hoofd, hart en lijf worden interacties authentieker, effectiever en duurzamer.",
-                          "Boxing is more than a physical sport. It is a dynamic game of action and reaction, strategy and timing. Just like in the ring, interaction is all about observation, timing, action and reaction. Finding out the customer's needs is central to this.\n\nThe IOM method adds a crucial layer to this. Where boxing trains the outside: reaction, timing and cooperation. The IOM method focuses on the inside: the inner dialogue. Who controls your reactions? The autopilot or the director? By learning to consciously switch between head, heart and body, interactions become more authentic, effective and sustainable."
+                          "Boksen is meer dan een fysieke sport. Het is een dynamisch spel van actie en reactie, strategie en timing. Tijdens het boksen wordt voelbaar hoe jouw gedrag, timing en woorden effect hebben op de ander en jezelf. Vanuit die ervaring verken je jouw patronen, keuzes, perspectieven en ontwikkeling in de boksoefeningen.\n\nDe Image of the Mind-methode versterkt het leren en geeft betekenis aan de ervaringen die tijdens de sessies worden opgedaan. De IOM-methode biedt een helder kader om te begrijpen hoe gedrag ontstaat en hoe je bewust kunt schakelen tussen automatische reacties en doelgericht handelen.\n\nDaarbij spelen twee interne systemen een centrale rol:\nDe Regisseur: het bewuste deel dat reflecteert, keuzes maakt en richting geeft.\nDe Autopilot: de automatische reacties en gewoontes die zonder nadenken worden ingezet.",
+                          "Boxing is more than a physical sport. It is a dynamic game of action and reaction, strategy and timing. During boxing, it becomes palpable how your behavior, timing and words affect the other and yourself. From that experience, you explore your patterns, choices, perspectives and development in the boxing exercises.\n\nThe Image of the Mind method reinforces learning and gives meaning to the experiences gained during the sessions. The IOM method provides a clear framework for understanding how behavior arises and how you can consciously switch between automatic reactions and goal-oriented action.\n\nTwo internal systems play a central role in this:\nThe Director: the conscious part that reflects, makes choices and gives direction.\nThe Autopilot: the automatic reactions and habits that are used without thinking."
                         )}
                       </p>
                     </div>
@@ -718,8 +1011,8 @@ export default function App() {
                     <div className="pt-4 pb-2">
                       <p className="text-sm text-earth-muted leading-relaxed whitespace-pre-line">
                         {t(
-                          "Boksen is niet alleen een fysieke activiteit, het is een krachtige metafoor voor communicatie. In de boksring leer je snel reageren of vertragen, situaties inschatten, en je eigen grenzen respecteren. De IOM-methode voegt hier een cruciale laag aan toe: wie stuurt jouw reacties? De autopilot of de regisseur?",
-                          "Boxing is not just a physical activity, it is a powerful metaphor for communication. In the boxing ring you learn to react quickly or slow down, assess situations, and respect your own boundaries. The IOM method adds a crucial layer to this: who controls your reactions? The autopilot or the director?"
+                          "Boksen is meer dan een fysieke sport. Het is een dynamisch spel van actie en reactie, strategie en timing. Tijdens het boksen wordt voelbaar hoe jouw gedrag, timing en woorden effect hebben op de ander en jezelf. Vanuit die ervaring verken je jouw patronen, keuzes, perspectieven en ontwikkeling in de boksoefeningen.\n\nDe Image of the Mind-methode versterkt het leren en geeft betekenis aan de ervaringen die tijdens de sessies worden opgedaan. De IOM-methode biedt een helder kader om te begrijpen hoe gedrag ontstaat en hoe je bewust kunt schakelen tussen automatische reacties en doelgericht handelen.\n\nDaarbij spelen twee interne systemen een centrale rol:\nDe Regisseur: het bewuste deel dat reflecteert, keuzes maakt en richting geeft.\nDe Autopilot: de automatische reacties en gewoontes die zonder nadenken worden ingezet.",
+                          "Boxing is more than a physical sport. It is a dynamic game of action and reaction, strategy and timing. During boxing, it becomes palpable how your behavior, timing and words affect the other and yourself. From that experience, you explore your patterns, choices, perspectives and development in the boxing exercises.\n\nThe Image of the Mind method reinforces learning and gives meaning to the experiences gained during the sessions. The IOM method provides a clear framework for understanding how behavior arises and how you can consciously switch between automatic reactions and goal-oriented action.\n\nTwo internal systems play a central role in this:\nThe Director: the conscious part that reflects, makes choices and gives direction.\nThe Autopilot: the automatic reactions and habits that are used without thinking."
                         )}
                       </p>
                     </div>
@@ -899,8 +1192,8 @@ export default function App() {
                     <div className="pt-4 pb-2">
                       <p className="text-sm text-earth-muted leading-relaxed whitespace-pre-line">
                         {t(
-                          "Boksen is meer dan een fysieke sport. Het is een dynamisch spel van actie en reactie, strategie en timing. Net als in de ring draait het in salesteams om observatie, timing, actie en reactie. Het achterhalen van de behoeften van de klant staat daarbij centraal.\n\nDe IOM-methode voegt hier een cruciale laag aan toe. Waar boksen de buitenkant traint: reactie, timing en samenwerking. Richt de IOM-methode zich op de binnenkant: het innerlijk dialoog. Wie stuurt jouw reacties? De autopilot of de regisseur? Door bewust te leren schakelen tussen hoofd, hart en lijf worden salesgesprekken authentieker, effectiever en duurzamer.",
-                          "Boxing is more than a physical sport. It is a dynamic game of action and reaction, strategy and timing. Just like in the ring, sales teams are all about observation, timing, action and reaction. Finding out the customer's needs is central to this.\n\nThe IOM method adds a crucial layer to this. Where boxing trains the outside: reaction, timing and cooperation. The IOM method focuses on the inside: the inner dialogue. Who controls your reactions? The autopilot or the director? By learning to consciously switch between head, heart and body, sales conversations become more authentic, effective and sustainable."
+                          "Boksen is meer dan een fysieke sport. Het is een dynamisch spel van actie en reactie, strategie en timing. Tijdens het boksen wordt voelbaar hoe jouw gedrag, timing en woorden effect hebben op de ander en jezelf. Vanuit die ervaring verken je jouw patronen, keuzes, perspectieven en ontwikkeling in de boksoefeningen.\n\nDe Image of the Mind-methode versterkt het leren en geeft betekenis aan de ervaringen die tijdens de sessies worden opgedaan. De IOM-methode biedt een helder kader om te begrijpen hoe gedrag ontstaat en hoe je bewust kunt schakelen tussen automatische reacties en doelgericht handelen.\n\nDaarbij spelen twee interne systemen een centrale rol:\nDe Regisseur: het bewuste deel dat reflecteert, keuzes maakt en richting geeft.\nDe Autopilot: de automatische reacties en gewoontes die zonder nadenken worden ingezet.",
+                          "Boxing is more than a physical sport. It is a dynamic game of action and reaction, strategy and timing. During boxing, it becomes palpable how your behavior, timing and words affect the other and yourself. From that experience, you explore your patterns, choices, perspectives and development in the boxing exercises.\n\nThe Image of the Mind method reinforces learning and gives meaning to the experiences gained during the sessions. The IOM method provides a clear framework for understanding how behavior arises and how you can consciously switch between automatic reactions and goal-oriented action.\n\nTwo internal systems play a central role in this:\nThe Director: the conscious part that reflects, makes choices and gives direction.\nThe Autopilot: the automatic reactions and habits that are used without thinking."
                         )}
                       </p>
                     </div>
@@ -1127,6 +1420,17 @@ export default function App() {
                 </a>
               </div>
             </motion.div>
+          )}
+
+          {currentPage === 'iom-methode' && (
+            <DetailPage 
+              key="iom-methode"
+              title="IOM Methode"
+              content="Meer informatie volgt binnenkort."
+              onBack={goBack}
+              ctaText="Meer info / Aanvragen"
+              onCtaClick={() => navigateTo('contact')}
+            />
           )}
 
           {currentPage === 'about' && (
