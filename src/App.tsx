@@ -40,9 +40,9 @@ interface TileProps {
 
 const Tile: React.FC<TileProps> = ({ id, icon, label, onClick, subtitle }) => (
   <motion.button
-    whileTap={{ scale: 0.95 }}
+    whileTap={{ scale: 0.98 }}
     onClick={() => onClick(id)}
-    className="bg-earth-card p-6 rounded-2xl shadow-sm border border-black/5 flex flex-col items-center justify-center text-center gap-3 transition-shadow hover:shadow-md w-full"
+    className="bg-earth-card p-6 rounded-2xl shadow-sm border border-black/5 flex flex-col items-center justify-center text-center gap-3 w-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
   >
     <div className="text-earth-primary w-10 h-10 flex items-center justify-center">
       {icon}
@@ -153,7 +153,7 @@ const GoogleReviewBadge: React.FC = () => (
     href="https://www.google.com/maps/search/DeTaalVan+Lelystad"
     target="_blank"
     rel="noopener noreferrer"
-    className="bg-white px-5 py-3 rounded-2xl shadow-sm border border-black/5 flex items-center gap-4 mx-auto w-fit hover:shadow-md transition-all active:scale-95"
+    className="bg-white px-5 py-3 rounded-2xl shadow-sm border border-black/5 flex items-center gap-4 mx-auto w-fit transition-all duration-300 hover:shadow-lg hover:-translate-y-1 active:scale-95"
   >
     <div className="text-2xl font-bold text-earth-ink leading-none">4.7</div>
     <div className="flex flex-col justify-center">
@@ -189,6 +189,8 @@ export default function App() {
   const [isVastlooptOpen, setIsVastlooptOpen] = useState(false);
   const [isVoorWieOpen, setIsVoorWieOpen] = useState(false);
   const [isReintegratieResultOpen, setIsReintegratieResultOpen] = useState(false);
+  const [isFilosofieOpen, setIsFilosofieOpen] = useState(false);
+  const [activeElement, setActiveElement] = useState<string | null>(null);
 
   const t = (nl: string, en: string) => lang === 'nl' ? nl : en;
 
@@ -1423,21 +1425,251 @@ export default function App() {
           )}
 
           {currentPage === 'iom-methode' && (
-            <DetailPage 
+            <motion.div
               key="iom-methode"
-              title="IOM Methode"
-              content="Meer informatie volgt binnenkort."
-              onBack={goBack}
-              ctaText="Meer info / Aanvragen"
-              onCtaClick={() => navigateTo('contact')}
-            />
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="page-transition bg-earth-bg z-10 p-6"
+            >
+              <button 
+                onClick={goBack}
+                className="flex items-center gap-2 text-earth-muted mb-8 hover:text-earth-accent transition-colors"
+              >
+                <ChevronLeft size={20} />
+                <span>Terug</span>
+              </button>
+
+              <h2 className="font-serif text-earth-accent text-2xl text-center mb-6">
+                Image of the Mind
+              </h2>
+
+              <p className="text-sm text-earth-muted text-center leading-relaxed px-4 mb-6">
+                "De IOM-methode biedt een helder kader om te begrijpen 
+                hoe gedrag ontstaat en hoe je bewust kunt schakelen 
+                tussen automatische reacties en doelgericht handelen."
+              </p>
+
+              <div className="relative w-full flex flex-col items-center">
+                <svg viewBox="0 0 300 350" width="100%" className="max-w-xs">
+
+                  {/* Pijl Situatie — elegant, van linksboven naar cirkel */}
+                  <defs>
+                    <marker id="arrowIn" markerWidth="8" markerHeight="8" 
+                      refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L8,3 z" fill="#233652"/>
+                    </marker>
+                    <marker id="arrowOut" markerWidth="8" markerHeight="8" 
+                      refX="2" refY="3" orient="auto">
+                      <path d="M8,0 L8,6 L0,3 z" fill="#233652"/>
+                    </marker>
+                  </defs>
+
+                  <line x1="45" y1="45" x2="95" y2="90" 
+                    stroke="#233652" strokeWidth="1.5"
+                    markerEnd="url(#arrowIn)"/>
+                  <text x="10" y="40" fontSize="12" 
+                    fontFamily="Georgia, serif" 
+                    fontStyle="italic" fill="#233652">Situatie</text>
+
+                  {/* Hoofdcirkel */}
+                  <circle cx="150" cy="145" r="90" 
+                    fill="none" stroke="#233652" strokeWidth="2"/>
+
+                  {/* Verticale stippellijn — alleen binnen cirkel */}
+                  <line x1="150" y1="58" x2="150" y2="150" 
+                    stroke="#233652" strokeWidth="1" 
+                    strokeDasharray="4 3"/>
+
+                  {/* Horizontale stippellijn — alleen binnen cirkel */}
+                  <line x1="63" y1="150" x2="237" y2="150" 
+                    stroke="#233652" strokeWidth="1"/>
+
+                  {/* AutoPilot — gecentreerd in linksboven kwadrant */}
+                  <g onClick={() => setActiveElement(
+                    activeElement === 'autopilot' ? null : 'autopilot'
+                  )} style={{cursor: 'pointer'}}>
+                    <text x="107" y="108" fontSize="11" 
+                      fontWeight="bold" fill="#233652" 
+                      textAnchor="middle">AutoPilot</text>
+                    <text x="107" y="123" fontSize="9" 
+                      fill="#8C8C82" textAnchor="middle">Neiging</text>
+                  </g>
+
+                  {/* Regisseur — gecentreerd in rechtsboven kwadrant */}
+                  <g onClick={() => setActiveElement(
+                    activeElement === 'regisseur' ? null : 'regisseur'
+                  )} style={{cursor: 'pointer'}}>
+                    <text x="193" y="108" fontSize="11" 
+                      fontWeight="bold" fill="#233652" 
+                      textAnchor="middle">Regisseur</text>
+                    <text x="193" y="123" fontSize="9" 
+                      fill="#8C8C82" textAnchor="middle">Behoefte</text>
+                  </g>
+
+                  {/* Denken Voelen Doen box — klikbaar */}
+                  <g onClick={() => setActiveElement(
+                    activeElement === 'dvd' ? null : 'dvd'
+                  )} style={{cursor: 'pointer'}}>
+                    <rect x="120" y="170.5" width="60" height="44" 
+                      fill="none" stroke="#233652" strokeWidth="1.5"
+                      rx="6"/>
+                    <text x="150" y="185.5" fontSize="7.5" 
+                      fill="#233652" textAnchor="middle">Denken</text>
+                    <text x="150" y="197.5" fontSize="7.5" 
+                      fill="#233652" textAnchor="middle">Voelen</text>
+                    <text x="150" y="209.5" fontSize="7.5" 
+                      fill="#233652" textAnchor="middle">Doen</text>
+                  </g>
+
+                  {/* Pijl Regie — elegant, van cirkel naar rechtsboven */}
+                  <line x1="210" y1="90" x2="245" y2="58" 
+                    stroke="#233652" strokeWidth="1.5"
+                    markerEnd="url(#arrowIn)"/>
+                  <text x="252" y="52" fontSize="12" 
+                    fontFamily="Georgia, serif" 
+                    fontStyle="italic" fill="#233652">Regie</text>
+
+                  {/* Verbindingslijn cirkel naar figuur */}
+                  <line x1="150" y1="235" x2="150" y2="248" 
+                    stroke="#233652" strokeWidth="1.5"/>
+
+                  {/* Hoofd */}
+                  <circle cx="150" cy="260" r="12" 
+                    fill="none" stroke="#233652" strokeWidth="1.5"/>
+
+                  {/* Lichaam */}
+                  <line x1="150" y1="272" x2="150" y2="310" 
+                    stroke="#233652" strokeWidth="1.5"/>
+
+                  {/* Armen */}
+                  <line x1="125" y1="288" x2="175" y2="288" 
+                    stroke="#233652" strokeWidth="1.5"/>
+
+                  {/* Benen */}
+                  <line x1="150" y1="310" x2="130" y2="335" 
+                    stroke="#233652" strokeWidth="1.5"/>
+                  <line x1="150" y1="310" x2="170" y2="335" 
+                    stroke="#233652" strokeWidth="1.5"/>
+
+                </svg>
+
+                {/* Tooltips */}
+                {activeElement === 'autopilot' && (
+                  <div className="bg-white border border-black/10 rounded-2xl p-4 shadow-md mx-4 mt-2 text-center">
+                    <p className="text-xs font-medium text-earth-ink mb-1">
+                      Autopilot
+                    </p>
+                    <p className="text-xs text-earth-muted leading-relaxed">
+                      De autopilot bepaalt naar schatting 95% van ons 
+                      denken, voelen en handelen. Het zijn automatische reacties 
+                      en gewoontes die zonder nadenken worden ingezet. De 
+                      autopilot heeft geen filter en kent geen grenzen. Hij 
+                      stopt nooit, ook niet als het gedrag je niet meer dient.
+                    </p>
+                  </div>
+                )}
+
+                {activeElement === 'regisseur' && (
+                  <div className="bg-white border border-black/10 rounded-2xl p-4 shadow-md mx-4 mt-2 text-center">
+                    <p className="text-xs font-medium text-earth-ink mb-1">
+                      Regisseur
+                    </p>
+                    <p className="text-xs text-earth-muted leading-relaxed">
+                      De regisseur is het bewuste deel dat reflecteert, 
+                      keuzes maakt en richting geeft. Hij is verbonden met je 
+                      lichaam en je intuïtie. Vrij van conditionering. De 
+                      regisseur vertaalt wat je werkelijk nodig hebt, je intuïtieve behoefte. De regisseur maakt het mogelijk om bewust te kiezen, ongeacht wat de 
+                      autopilot aandraagt.
+                    </p>
+                  </div>
+                )}
+
+                {activeElement === 'dvd' && (
+                  <div className="bg-white border border-black/10 rounded-2xl p-4 shadow-md mx-4 mt-2 text-center">
+                    <p className="text-xs font-medium text-earth-ink mb-1">
+                      Denken · Voelen · Doen
+                    </p>
+                    <p className="text-xs text-earth-muted leading-relaxed">
+                      Het onbewuste bevat een complex netwerk van 
+                      programma's, conditionering en patronen. Ze zijn gevormd door 
+                      ervaringen, opvoeding en interacties. Ze helpen je 
+                      automatisch door de wereld te navigeren, maar niet 
+                      altijd op een manier die past bij wie jij wilt zijn.
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              <p className="text-xs text-earth-muted text-center mt-4 px-4 leading-relaxed">
+                Tik op AutoPilot, Regisseur of Denken/Voelen/Doen voor meer uitleg.
+              </p>
+
+              <div className="w-full mt-10 px-4">
+                <button
+                  onClick={() => setIsFilosofieOpen(!isFilosofieOpen)}
+                  className="flex items-center justify-between w-full py-4 border-b border-black/5"
+                >
+                  <span className="font-serif text-earth-accent text-lg">
+                    De filosofie achter de IOM-methode
+                  </span>
+                  <ChevronDown 
+                    size={20} 
+                    className={`text-earth-muted transition-transform duration-300 ${isFilosofieOpen ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                
+                {isFilosofieOpen && (
+                  <div className="pt-4 pb-2">
+                    <p className="text-sm text-earth-muted leading-relaxed whitespace-pre-wrap">
+                      {`De Image of the Mind (IOM)-methode maakt zichtbaar 
+hoe gedrag tot stand komt en waar mensen de regie 
+verliezen. Gedachten, gevoelens en reacties lijken 
+vaak vanzelf te gebeuren, maar zijn in veel gevallen 
+het resultaat van conditionering.
+
+Binnen de IOM-methode leren mensen het onderscheid 
+maken tussen wat automatisch gebeurt en wat bewust 
+gekozen kan worden. Tussen de autopilot en de 
+regisseur. Juist in dat onderscheid ontstaat ruimte.
+
+Een belangrijk onderdeel hiervan is intuïtie. Niet 
+als emotie, maar als een directe vorm van richting 
+die via het lichaam voelbaar is. Waar de autopilot 
+wordt gestuurd door gedachten die gedrag 
+rechtvaardigen, geeft intuïtie richting zonder verhaal.
+
+Regie betekent dat je leert handelen vanuit keuze, 
+ongeacht wat je denkt of voelt. Niet door eerst iets 
+op te lossen, maar door direct invloed uit te oefenen 
+op wat je doet.
+
+De IOM-methode brengt mensen terug naar een positie 
+van sturing. Niet door de complexiteit te verminderen, 
+maar door deze inzichtelijk te maken. Zodat gedrag 
+geen reactie meer is, maar een bewuste keuze.`}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex justify-center mt-8">
+                <button 
+                  onClick={() => navigateTo('contact')}
+                  className="w-full max-w-xs bg-earth-primary text-white px-6 py-4 rounded-full font-medium text-center shadow-lg hover:shadow-xl transition-all active:scale-95"
+                >
+                  Meer info / Aanvragen
+                </button>
+              </div>
+            </motion.div>
           )}
 
           {currentPage === 'about' && (
             <DetailPage 
               key="about"
               title={t('Over Sjoerd Kersten', 'About Sjoerd Kersten')}
-              subtitle={t('Specialist in innerlijk dialoog en regie.', 'Specialist in inner dialogue and control.')}
+              subtitle={t('Specialist in de IOM-methode, je innerlijke dialoog en regie.', 'Specialist in the IOM method, your inner dialogue and control.')}
               imageUrl="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=13;908;2891;841,width=960,height=1280/image/404499409/3473e8e5-c864-4275-804c-e3514e40ced0.jpg"
               imageStyle={{ objectPosition: 'center 5%' }}
               content={t(
