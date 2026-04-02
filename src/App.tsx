@@ -1623,32 +1623,15 @@ export default function App() {
                 {isFilosofieOpen && (
                   <div className="pt-4 pb-2">
                     <p className="text-sm text-earth-muted leading-relaxed whitespace-pre-wrap">
-                      {`De Image of the Mind (IOM)-methode maakt zichtbaar 
-hoe gedrag tot stand komt en waar mensen de regie 
-verliezen. Gedachten, gevoelens en reacties lijken 
-vaak vanzelf te gebeuren, maar zijn in veel gevallen 
-het resultaat van conditionering.
+                      {`De Image of the Mind (IOM)-methode maakt zichtbaar hoe gedrag tot stand komt en waar mensen de regie verliezen. Gedachten, gevoelens en reacties lijken vaak vanzelf te gebeuren, maar zijn in veel gevallen het resultaat van conditionering. 
 
-Binnen de IOM-methode leren mensen het onderscheid 
-maken tussen wat automatisch gebeurt en wat bewust 
-gekozen kan worden. Tussen de autopilot en de 
-regisseur. Juist in dat onderscheid ontstaat ruimte.
+Binnen de IOM-methode leren mensen het onderscheid maken tussen wat automatisch gebeurt en wat bewust gekozen kan worden. Tussen de autopilot en de regisseur. Juist in dat onderscheid ontstaat ruimte. 
 
-Een belangrijk onderdeel hiervan is intuïtie. Niet 
-als emotie, maar als een directe vorm van richting 
-die via het lichaam voelbaar is. Waar de autopilot 
-wordt gestuurd door gedachten die gedrag 
-rechtvaardigen, geeft intuïtie richting zonder verhaal.
+Een belangrijk onderdeel hiervan is intuïtie. Niet als emotie, maar als een directe vorm van richting die via het lichaam voelbaar is. Waar de autopilot wordt gestuurd door gedachten die gedrag rechtvaardigen, geeft intuïtie richting zonder verhaal. 
 
-Regie betekent dat je leert handelen vanuit keuze, 
-ongeacht wat je denkt of voelt. Niet door eerst iets 
-op te lossen, maar door direct invloed uit te oefenen 
-op wat je doet.
+Regie betekent dat je leert handelen vanuit keuze, ongeacht wat je denkt of voelt. Niet door eerst iets op te lossen, maar door direct invloed uit te oefenen op wat je doet. 
 
-De IOM-methode brengt mensen terug naar een positie 
-van sturing. Niet door de complexiteit te verminderen, 
-maar door deze inzichtelijk te maken. Zodat gedrag 
-geen reactie meer is, maar een bewuste keuze.`}
+De IOM-methode brengt mensen terug naar een positie van sturing. Niet door de complexiteit te verminderen, maar door deze inzichtelijk te maken. Zodat gedrag geen reactie meer is, maar een bewuste keuze.`}
                     </p>
                   </div>
                 )}
