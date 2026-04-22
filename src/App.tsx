@@ -501,26 +501,23 @@ export default function App() {
                     />
                   </button>
                   
-                  <div className="pt-4 pb-2">
-                    <div className="space-y-2">
-                      <p className="text-sm text-earth-muted text-center">
-                        {t("Gebaat zijn bij een aanpak die verder gaat dan alleen praten", "Benefit from an approach that goes beyond just talking")}
-                      </p>
-                      <p className="text-sm text-earth-muted text-center">
-                        {t("Vastlopen in het proces", "Getting stuck in the process")}
-                      </p>
-                      <p className="text-sm text-earth-muted text-center">
-                        {t("Moeite hebben met het omzetten van inzicht naar actie", "Having difficulty translating insight into action")}
-                      </p>
-                      <p className="text-sm text-earth-muted text-center">
-                        {t("Last hebben van stress, spanning of onzekerheid", "Suffering from stress, tension or uncertainty")}
-                      </p>
-                      <p className="text-sm text-earth-muted text-center">
-                        {t("Ondersteuning nodig hebben in het vasthouden van ontwikkeling", "Need support in maintaining development")}
-                      </p>
-                      <p className="text-sm text-earth-muted text-center">
-                        {t("Willen werken aan duurzame inzetbaarheid", "Want to work on sustainable employability")}
-                      </p>
+                  <div className="pt-4 pb-6">
+                    <div className="space-y-3 max-w-[280px] mx-auto">
+                      {[
+                        { nl: "Gebaat zijn bij een aanpak die verder gaat dan alleen praten", en: "Benefit from an approach that goes beyond just talking" },
+                        { nl: "Vastlopen in het proces", en: "Getting stuck in the process" },
+                        { nl: "Moeite hebben met het omzetten van inzicht naar actie", en: "Having difficulty translating insight into action" },
+                        { nl: "Last hebben van stress, spanning of onzekerheid", en: "Suffering from stress, tension or uncertainty" },
+                        { nl: "Ondersteuning nodig hebben in het vasthouden van ontwikkeling", en: "Need support in maintaining development" },
+                        { nl: "Willen werken aan duurzame inzetbaarheid", en: "Want to work on sustainable employability" }
+                      ].map((item, idx) => (
+                        <div key={idx} className="flex gap-3 text-left">
+                          <span className="text-earth-muted shrink-0 text-sm">•</span>
+                          <p className="text-sm text-earth-muted leading-relaxed">
+                            {t(item.nl, item.en)}
+                          </p>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -1622,16 +1619,20 @@ export default function App() {
                 
                 {isFilosofieOpen && (
                   <div className="pt-4 pb-2">
-                    <p className="text-sm text-earth-muted leading-relaxed whitespace-pre-wrap">
-                      {`De Image of the Mind (IOM)-methode maakt zichtbaar hoe gedrag tot stand komt en waar mensen de regie verliezen. Gedachten, gevoelens en reacties lijken vaak vanzelf te gebeuren, maar zijn in veel gevallen het resultaat van conditionering. 
-
-Binnen de IOM-methode leren mensen het onderscheid maken tussen wat automatisch gebeurt en wat bewust gekozen kan worden. Tussen de autopilot en de regisseur. Juist in dat onderscheid ontstaat ruimte. 
-
-Een belangrijk onderdeel hiervan is intuïtie. Niet als emotie, maar als een directe vorm van richting die via het lichaam voelbaar is. Waar de autopilot wordt gestuurd door gedachten die gedrag rechtvaardigen, geeft intuïtie richting zonder verhaal. 
-
-Regie betekent dat je leert handelen vanuit keuze, ongeacht wat je denkt of voelt. Niet door eerst iets op te lossen, maar door direct invloed uit te oefenen op wat je doet. 
-
-De IOM-methode brengt mensen terug naar een positie van sturing. Niet door de complexiteit te verminderen, maar door deze inzichtelijk te maken. Zodat gedrag geen reactie meer is, maar een bewuste keuze.`}
+                    <p className="text-sm text-earth-muted leading-relaxed">
+                      De Image of the Mind (IOM)-methode maakt zichtbaar hoe gedrag tot stand komt en waar mensen de regie verliezen. Gedachten, gevoelens en reacties lijken vaak vanzelf te gebeuren, maar zijn in veel gevallen het resultaat van conditionering.
+                    </p>
+                    <p className="text-sm text-earth-muted leading-relaxed mt-4">
+                      Binnen de IOM-methode leren mensen het onderscheid maken tussen wat automatisch gebeurt en wat bewust gekozen kan worden. Tussen de autopilot en de regisseur. Juist in dat onderscheid ontstaat ruimte.
+                    </p>
+                    <p className="text-sm text-earth-muted leading-relaxed mt-4">
+                      Een belangrijk onderdeel hiervan is intuïtie. Niet als emotie, maar als een directe vorm van richting die via het lichaam voelbaar is. Waar de autopilot wordt gestuurd door gedachten die gedrag rechtvaardigen, geeft intuïtie richting zonder verhaal.
+                    </p>
+                    <p className="text-sm text-earth-muted leading-relaxed mt-4">
+                      Regie betekent dat je leert handelen vanuit keuze, ongeacht wat je denkt of voelt. Niet door eerst iets op te lossen, maar door direct invloed uit te oefenen op wat je doet.
+                    </p>
+                    <p className="text-sm text-earth-muted leading-relaxed mt-4">
+                      De IOM-methode brengt mensen terug naar een positie van sturing. Niet door de complexiteit te verminderen, maar door deze inzichtelijk te maken. Zodat gedrag geen reactie meer is, maar een bewuste keuze.
                     </p>
                   </div>
                 )}
