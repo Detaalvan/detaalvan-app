@@ -190,6 +190,8 @@ export default function App() {
   const [isVoorWieOpen, setIsVoorWieOpen] = useState(false);
   const [isReintegratieResultOpen, setIsReintegratieResultOpen] = useState(false);
   const [isFilosofieOpen, setIsFilosofieOpen] = useState(false);
+  const [isWaaromAndersOpen, setIsWaaromAndersOpen] = useState(false);
+  const [isCoachingResultOpen, setIsCoachingResultOpen] = useState(false);
   const [activeElement, setActiveElement] = useState<string | null>(null);
 
   const t = (nl: string, en: string) => lang === 'nl' ? nl : en;
@@ -571,19 +573,228 @@ export default function App() {
           )}
 
           {currentPage === 'coaching' && (
-            <DetailPage 
+            <motion.div
               key="coaching"
-              title="Coaching"
-              icon={<Brain />}
-              imageUrl="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=0;0;0;0,width=925,height=1280/image/543441174/67f7b35e-a5dc-4235-b0c9-012b8584ac1b.png"
-              content={t(
-                "Iedereen heeft een autopilot. Niet iedereen ervaart regie. Wordt bij DeTaalVan meester over je innerlijke dialoog. Met hoofd, hart en lijf. Zodat je keuzes maakt die écht van jou zijn.",
-                "Everyone has an autopilot. Not everyone experiences control. Master your inner dialogue at DeTaalVan. With head, heart and body. So you make choices that are truly yours."
-              )}
-              onBack={goBack}
-              ctaText={t('Meer info / Aanvragen', 'More info / Request')}
-              onCtaClick={() => navigateTo('contact')}
-            />
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="page-transition bg-earth-bg z-10 p-6"
+            >
+              <button 
+                onClick={goBack}
+                className="flex items-center gap-2 text-earth-muted mb-8 hover:text-earth-accent transition-colors"
+              >
+                <ChevronLeft size={20} />
+                <span>Terug</span>
+              </button>
+
+              <div className="flex flex-col items-center text-center mb-10">
+                <div className="w-44 h-44 rounded-full overflow-hidden shadow-md border-4 border-white mb-6">
+                  <img 
+                    src="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=0;0;0;0,width=925,height=1280/image/543441174/67f7b35e-a5dc-4235-b0c9-012b8584ac1b.png" 
+                    alt="Coaching" 
+                    className="w-full h-full object-cover"
+                    style={{ objectPosition: 'center 5%' }}
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+                <h2 className="text-3xl font-serif text-earth-accent mb-2">Coaching</h2>
+                <p className="text-earth-muted text-sm italic max-w-[280px]">
+                  {t("Stop met reageren onder druk. Start met regisseren.", "Stop reacting under pressure. Start directing.")}
+                </p>
+              </div>
+
+              <div className="space-y-8 text-earth-ink mb-12">
+                <div className="px-2">
+                  <p className="text-sm text-earth-ink leading-relaxed text-center max-w-sm mx-auto">
+                    {t(
+                      "Onder druk word je zichtbaar. De vraag is: bevalt wat je ziet? Met de IOM-methode maken wij zichtbaar wat anderen missen zodat jij leert sturen in plaats van automatisch reageert.",
+                      "Under pressure, you become visible. The question is: do you like what you see? With the IOM method, we make visible what others miss so you learn to lead instead of reacting automatically."
+                    )}
+                  </p>
+                </div>
+
+                <div className="space-y-4 text-center">
+                  <div className="space-y-1 text-sm text-earth-muted">
+                    <p>{t("Je weet wat je moet doen, maar doet iets anders onder druk.", "You know what to do, but do something else under pressure.")}</p>
+                    <p>{t("Je schiet in oude patronen: vermijden, controleren, aanpassen.", "You jump into old patterns: avoid, control, adapt.")}</p>
+                    <p>{t("Je gedrag klopt niet met wie je wilt zijn als professional of leider.", "Your behavior doesn't match who you want to be as a professional or leader.")}</p>
+                  </div>
+                  <p className="font-bold text-earth-accent">{t("Dan zit je in autopilot.", "Then you are in autopilot.")}</p>
+                </div>
+
+                <div className="w-full">
+                  <button
+                    onClick={() => setIsWaaromAndersOpen(!isWaaromAndersOpen)}
+                    className="flex items-center justify-between w-full py-4 border-b border-black/5"
+                  >
+                    <span className="font-serif text-earth-accent text-lg">
+                      {t("Waarom dit anders is", "Why this is different")}
+                    </span>
+                    <ChevronDown 
+                      size={20} 
+                      className={`text-earth-muted transition-transform duration-300 ${isWaaromAndersOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+                  
+                  {isWaaromAndersOpen && (
+                    <div className="pt-4 pb-2">
+                      <div className="text-sm text-earth-muted leading-relaxed space-y-4">
+                        <p>{t("De meeste coaching blijft hangen in praten en begrijpen. Wij gaan een laag dieper.", "Most coaching stays stuck in talking and understanding. We go a layer deeper.")}</p>
+                        <div>
+                          <p className="font-medium mb-2">{t("Wij werken met:", "We work with:")}</p>
+                          <ul className="space-y-1">
+                            <li>{t("• Boksvormen — gedrag wordt direct zichtbaar", "• Boxing forms — behavior becomes immediately visible")}</li>
+                            <li>{t("• Video-analyse — je ziet jezelf zoals anderen jou ervaren", "• Video analysis — you see yourself as others experience you")}</li>
+                            <li>{t("• IOM-methode — inzicht in je innerlijke dialoog en patronen", "• IOM method — insight into your inner dialogue and patterns")}</li>
+                          </ul>
+                        </div>
+                        <p className="italic">{t("Weten is niet genoeg. Je moet het voelen, zien en doen.", "Knowing is not enough. You have to feel, see and do it.")}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    { nl: "Gedrag & Patronen", en: "Behavior & Patterns" },
+                    { nl: "Emoties & Reacties", en: "Emotions & Reactions" },
+                    { nl: "Je innerlijke dialoog", en: "Your inner dialogue" },
+                    { nl: "Timing & Interactie", en: "Timing & Interaction" }
+                  ].map((item, index) => (
+                    <div 
+                      key={index} 
+                      className="bg-earth-card p-4 rounded-2xl shadow-sm border border-black/5 flex items-center justify-center text-center min-h-[80px]"
+                    >
+                      <span className="text-xs font-semibold text-earth-ink leading-tight uppercase tracking-wide">
+                        {t(item.nl, item.en)}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="w-full">
+                  <button
+                    onClick={() => setIsCoachingResultOpen(!isCoachingResultOpen)}
+                    className="flex items-center justify-between w-full py-4 border-b border-black/5"
+                  >
+                    <span className="font-serif text-earth-accent text-lg">
+                      {t("Wat levert het op?", "What does it yield?")}
+                    </span>
+                    <ChevronDown 
+                      size={20} 
+                      className={`text-earth-muted transition-transform duration-300 ${isCoachingResultOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+                  
+                  <div className="pt-4 pb-2">
+                    <div className="space-y-4">
+                      {[
+                        { 
+                          title: { nl: "Bewust reageren onder druk", en: "React consciously under pressure" },
+                          desc: { nl: "Je reageert niet meer automatisch maar maakt een bewuste keuze.", en: "You no longer react automatically but make a conscious choice." }
+                        },
+                        { 
+                          title: { nl: "Patronen herkennen", en: "Recognize patterns" },
+                          desc: { nl: "Je herkent je patronen op het moment dat ze ontstaan.", en: "You recognize your patterns the moment they arise." }
+                        },
+                        { 
+                          title: { nl: "Schakelen onder druk", en: "Shifting under pressure" },
+                          desc: { nl: "Je kunt schakelen ook als het spannend wordt.", en: "You can shift even when it gets exciting." }
+                        },
+                        { 
+                          title: { nl: "Meer rust en overzicht", en: "More peace and overview" },
+                          desc: { nl: "Je handelt in lijn met wie je wilt zijn.", en: "You act in line with who you want to be." }
+                        }
+                      ].map((item, idx) => (
+                        <div key={idx} className="space-y-1">
+                          <div className="flex items-start gap-2">
+                            <span className="text-earth-accent shrink-0 mt-1">•</span>
+                            <p className="text-sm font-medium text-earth-ink">{t(item.title.nl, item.title.en)}</p>
+                          </div>
+                          {isCoachingResultOpen && (
+                            <p className="text-xs text-earth-muted pl-5 italic leading-relaxed">
+                              {t(item.desc.nl, item.desc.en)}
+                            </p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4 pt-6">
+                  <div className="bg-white p-6 rounded-2xl shadow-sm border border-black/5 text-center space-y-2">
+                    <h4 className="font-serif text-earth-accent text-lg">{t("Fase 1: Zichtbaar Onder Druk", "Phase 1: Visible Under Pressure")}</h4>
+                    <p className="text-sm text-earth-muted italic">
+                      {t("“Inzicht in eigen gedrag, communicatie en reacties. Bewustwording van triggers en patronen.”", "“Insight into own behavior, communication and reactions. Awareness of triggers and patterns.”")}
+                    </p>
+                  </div>
+                  <div className="bg-white p-6 rounded-2xl shadow-sm border border-black/5 text-center space-y-2">
+                    <h4 className="font-serif text-earth-accent text-lg">{t("Fase 2: Inzicht & Patronen", "Phase 2: Insight & Patterns")}</h4>
+                    <p className="text-sm text-earth-muted italic">
+                      {t("“Overzicht en grip op interne processen. Herkennen van gedrag onder verschillende soorten druk.”", "“Overview and grip on internal processes. Recognizing behavior under different types of pressure.”")}
+                    </p>
+                  </div>
+                  <div className="bg-white p-6 rounded-2xl shadow-sm border border-black/5 text-center space-y-2">
+                    <h4 className="font-serif text-earth-accent text-lg">{t("Fase 3: Regie in Actie", "Phase 3: Regie in Action")}</h4>
+                    <div className="text-sm text-earth-muted italic space-y-1">
+                      <p>{t("“Concreet ander gedrag. Meer regie, rust en impact. Direct toepasbaar in werk en leiderschap.”", "“Concrete different behavior. More control, peace and impact. Directly applicable in work and leadership.”")}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="px-2 pt-8">
+                  <div className="w-full space-y-3">
+                    <h3 className="font-serif text-earth-accent text-lg text-center w-full mb-4">
+                      {t("Praktische informatie", "Practical information")}
+                    </h3>
+                    
+                    <div className="flex justify-between border-b border-black/5 pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider">{t("AANPAK", "APPROACH")}</span>
+                      <span className="text-sm text-earth-ink font-medium text-right">
+                        {t("Gemiddeld 6 sessies", "Average of 6 sessions")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between border-b border-black/5 pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider">{t("VERGOEDING", "REIMBURSEMENT")}</span>
+                      <span className="text-sm text-earth-ink font-medium text-right">
+                        {t("Vaak vergoed door werkgever", "Often reimbursed by employer")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between border-b border-black/5 pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider">{t("LOCATIE", "LOCATION")}</span>
+                      <span className="text-sm text-earth-ink font-medium text-right">
+                        {t("Op locatie of online", "On site or online")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider">{t("DREMPEL", "THRESHOLD")}</span>
+                      <span className="text-sm text-earth-ink font-medium text-right">
+                        {t("Geen lange wachttijden, direct beginnen", "No long waiting times, start immediately")}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-sm text-earth-muted italic text-center pt-4">
+                  {t("“Je probleem zit niet in wat je weet. Het zit in wat je doet onder druk.”", "“Your problem isn't in what you know. It's in what you do under pressure.”")}
+                </p>
+              </div>
+
+              <div className="flex justify-center">
+                <button 
+                  onClick={() => navigateTo('contact')}
+                  className="w-full max-w-xs bg-earth-primary text-white px-6 py-4 rounded-full font-medium text-center shadow-lg hover:shadow-xl transition-all active:scale-95"
+                >
+                  {t('Plan een kennismaking', 'Schedule an introduction')}
+                </button>
+              </div>
+            </motion.div>
           )}
 
           {currentPage === 'teamtraining' && (
