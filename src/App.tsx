@@ -22,7 +22,12 @@ import {
   Calendar,
   RefreshCw,
   Lightbulb,
-  Hand
+  Hand,
+  Share2,
+  Copy,
+  Check,
+  X,
+  Facebook
 } from 'lucide-react';
 
 // --- Types ---
@@ -155,17 +160,17 @@ const GoogleReviewBadge: React.FC = () => (
     rel="noopener noreferrer"
     className="bg-white px-5 py-3 rounded-2xl shadow-sm border border-black/5 flex items-center gap-4 mx-auto w-fit transition-all duration-300 hover:shadow-lg hover:-translate-y-1 active:scale-95"
   >
-    <div className="text-2xl font-bold text-earth-ink leading-none">4.7</div>
+    <div className="text-2xl font-bold text-earth-ink leading-none">4.8</div>
     <div className="flex flex-col justify-center">
       <div className="flex text-[#FBBC05] text-sm mb-0.5">
         <span>★</span><span>★</span><span>★</span><span>★</span>
         <div className="relative">
           <span className="text-gray-200">★</span>
-          <span className="absolute top-0 left-0 w-[75%] overflow-hidden">★</span>
+          <span className="absolute top-0 left-0 w-[80%] overflow-hidden">★</span>
         </div>
       </div>
       <div className="text-[10px] text-earth-muted leading-none">
-        9 reviews · Beoordeeld op
+        12 reviews · Beoordeeld op
       </div>
     </div>
     <div className="flex font-bold text-lg tracking-tighter leading-none">
@@ -193,8 +198,58 @@ export default function App() {
   const [isWaaromAndersOpen, setIsWaaromAndersOpen] = useState(false);
   const [isCoachingResultOpen, setIsCoachingResultOpen] = useState(false);
   const [activeElement, setActiveElement] = useState<string | null>(null);
+  const [isShareOpen, setIsShareOpen] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   const t = (nl: string, en: string) => lang === 'nl' ? nl : en;
+
+  const shareUrl = "https://www.detaalvan.nl";
+  const shareTitle = "Sjoerd Kersten - DeTaalVan";
+  const shareText = t(
+    "Ik maak zichtbaar wat anderen missen. Bekijk de website van Sjoerd Kersten (DeTaalVan) voor coaching, teamtraining en re-integratie.",
+    "I make visible what others miss. Check out Sjoerd Kersten's website (DeTaalVan) for coaching, team training, and re-integration."
+  );
+
+  const handleShare = (platform: 'whatsapp' | 'linkedin' | 'facebook' | 'email' | 'copy') => {
+    switch (platform) {
+      case 'whatsapp':
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + shareUrl)}`, '_blank');
+        break;
+      case 'linkedin':
+        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`, '_blank');
+        break;
+      case 'facebook':
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank');
+        break;
+      case 'email':
+        window.open(`mailto:?subject=${encodeURIComponent(shareTitle)}&body=${encodeURIComponent(shareText + "\n\n" + shareUrl)}`, '_self');
+        break;
+      case 'copy':
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          setIsCopied(true);
+          setTimeout(() => setIsCopied(false), 2000);
+        });
+        break;
+    }
+  };
+
+  const triggerShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: shareTitle,
+          text: shareText,
+          url: shareUrl,
+        });
+      } catch (err) {
+        if (err instanceof Error && err.name !== 'AbortError') {
+          setIsShareOpen(true);
+        }
+      }
+    } else {
+      setIsShareOpen(true);
+    }
+  };
 
   const navigateTo = (page: Page) => {
     setHistory(prev => [...prev, page]);
@@ -227,6 +282,16 @@ export default function App() {
     <div className="max-w-[430px] mx-auto min-h-screen bg-earth-bg relative shadow-2xl overflow-hidden flex flex-col">
       {/* Header */}
       <header className="p-8 pt-12 text-center relative">
+        <div className="absolute top-8 left-8 flex items-center z-50">
+          <button 
+            onClick={triggerShare}
+            className="flex items-center gap-1.5 bg-white/80 backdrop-blur-sm hover:bg-white border border-black/5 rounded-full px-3 py-1.5 shadow-sm text-earth-primary text-xs font-semibold transition-all active:scale-95"
+            aria-label="Deel website"
+          >
+            <Share2 size={13} className="text-earth-primary" />
+            <span>{t('Delen', 'Share')}</span>
+          </button>
+        </div>
         <div className="absolute top-8 right-8 flex items-center gap-2 text-[#233652] text-xs z-50">
           <button 
             onClick={() => setLang('nl')}
@@ -247,7 +312,7 @@ export default function App() {
           animate={{ opacity: 1, y: 0 }}
         >
           <h1 className="text-4xl font-serif text-earth-primary mb-1">Sjoerd Kersten</h1>
-          <p className="text-earth-muted text-sm italic">{t('Ik maak zichtbaar wat anderen missen.', 'I make visible what others miss.')}</p>
+          <p className="text-earth-muted text-sm italic">{t('Van automatisch reageren naar bewust kiezen.', 'From automatic reaction to conscious choice.')}</p>
           <p className="text-[10px] text-earth-muted/60 mt-1 uppercase tracking-widest">DeTaalVan</p>
         </motion.div>
       </header>
@@ -294,8 +359,16 @@ export default function App() {
                 <Tile id="about" icon={<Info />} label={t('Over Sjoerd', 'About Sjoerd')} onClick={navigateTo} />
               </div>
 
-              <div className="pt-4">
+              <div className="pt-4 flex flex-col items-center gap-3">
                 <GoogleReviewBadge />
+                
+                <button
+                  onClick={triggerShare}
+                  className="flex items-center gap-2 bg-white px-5 py-3 rounded-2xl shadow-sm border border-black/5 text-earth-primary text-sm font-semibold transition-all hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98] mx-auto w-fit"
+                >
+                  <Share2 size={16} />
+                  <span>{t('Deel deze website', 'Share this website')}</span>
+                </button>
               </div>
             </motion.div>
           )}
@@ -2008,6 +2081,109 @@ export default function App() {
           onClick={() => handleNavClick('about')} 
         />
       </nav>
+
+      {/* Share Modal Bottom Sheet */}
+      <AnimatePresence>
+        {isShareOpen && (
+          <div className="absolute inset-0 z-[100] flex items-end justify-center">
+            {/* Backdrop */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsShareOpen(false)}
+              className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            />
+            
+            {/* Sheet Container */}
+            <motion.div 
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 220 }}
+              className="relative w-full bg-earth-bg rounded-t-[2.5rem] shadow-2xl p-6 pb-8 z-[101] flex flex-col border-t border-black/5"
+            >
+              {/* Drag Handle Indicator */}
+              <div className="w-12 h-1.5 bg-black/10 rounded-full mx-auto mb-5" />
+              
+              {/* Header */}
+              <div className="flex justify-between items-center mb-6">
+                <div className="text-left">
+                  <h3 className="text-xl font-serif text-earth-accent font-medium leading-tight">
+                    {t('Deel deze website', 'Share this website')}
+                  </h3>
+                  <p className="text-xs text-earth-muted mt-0.5">
+                    {t('Deel DeTaalVan van Sjoerd Kersten', 'Share DeTaalVan by Sjoerd Kersten')}
+                  </p>
+                </div>
+                <button 
+                  onClick={() => setIsShareOpen(false)}
+                  className="bg-white p-2 rounded-full shadow-sm hover:bg-earth-card border border-black/5 text-earth-muted hover:text-earth-ink transition-colors active:scale-95"
+                  aria-label="Sluit delen"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+              
+              {/* Platforms */}
+              <div className="grid grid-cols-2 gap-3 text-left">
+                <button
+                  onClick={() => handleShare('whatsapp')}
+                  className="flex items-center gap-3 bg-[#E8F8F0] hover:bg-[#D1F2E0] text-[#128C7E] px-4 py-3 rounded-2xl transition-all duration-200 active:scale-95 text-sm font-medium"
+                >
+                  <div className="bg-[#25D366] text-white p-1.5 rounded-xl shrink-0">
+                    <MessageCircle size={18} />
+                  </div>
+                  <span>WhatsApp</span>
+                </button>
+                
+                <button
+                  onClick={() => handleShare('linkedin')}
+                  className="flex items-center gap-3 bg-[#EAF4FA] hover:bg-[#D5E9F5] text-[#0077B5] px-4 py-3 rounded-2xl transition-all duration-200 active:scale-95 text-sm font-medium"
+                >
+                  <div className="bg-[#0077B5] text-white p-1.5 rounded-xl shrink-0">
+                    <Linkedin size={18} />
+                  </div>
+                  <span>LinkedIn</span>
+                </button>
+                
+                <button
+                  onClick={() => handleShare('facebook')}
+                  className="flex items-center gap-3 bg-[#EAF1FC] hover:bg-[#D5E3FA] text-[#1877F2] px-4 py-3 rounded-2xl transition-all duration-200 active:scale-95 text-sm font-medium"
+                >
+                  <div className="bg-[#1877F2] text-white p-1.5 rounded-xl shrink-0">
+                    <Facebook size={18} />
+                  </div>
+                  <span>Facebook</span>
+                </button>
+                
+                <button
+                  onClick={() => handleShare('email')}
+                  className="flex items-center gap-3 bg-[#F4EFF0] hover:bg-[#EAE2E3] text-earth-primary px-4 py-3 rounded-2xl transition-all duration-200 active:scale-95 text-sm font-medium"
+                >
+                  <div className="bg-earth-primary text-white p-1.5 rounded-xl shrink-0">
+                    <Mail size={18} />
+                  </div>
+                  <span>E-mail</span>
+                </button>
+              </div>
+
+              {/* Copy Link Button */}
+              <button
+                onClick={() => handleShare('copy')}
+                className={`w-full mt-4 flex items-center justify-center gap-2 px-4 py-3.5 rounded-2xl font-medium transition-all duration-200 active:scale-95 text-sm ${
+                  isCopied 
+                    ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/10' 
+                    : 'bg-white border border-black/5 text-earth-primary hover:bg-earth-card shadow-sm'
+                }`}
+              >
+                {isCopied ? <Check size={18} /> : <Copy size={18} />}
+                <span>{isCopied ? t('Link gekopieerd!', 'Link copied!') : t('Link kopiëren', 'Copy link')}</span>
+              </button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
