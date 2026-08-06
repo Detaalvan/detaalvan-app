@@ -170,7 +170,7 @@ const GoogleReviewBadge: React.FC = () => (
         </div>
       </div>
       <div className="text-[10px] text-earth-muted leading-none">
-        12 reviews · Beoordeeld op
+        13 reviews · Beoordeeld op
       </div>
     </div>
     <div className="flex font-bold text-lg tracking-tighter leading-none">
