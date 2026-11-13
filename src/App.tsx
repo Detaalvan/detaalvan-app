@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   Brain, 
   Users, 
-  Flame, 
+  Compass, 
   MessageSquare, 
   Star, 
   Info, 
@@ -31,7 +31,7 @@ import {
 } from 'lucide-react';
 
 // --- Types ---
-type Page = 'home' | 'coaching' | 'teamtraining' | 'teamtraining-tweedaagse' | 'teamtraining-losse-sessie' | 'teamtraining-traject-op-maat' | 'burnout' | 'contact' | 'reviews' | 'about' | 'sales-training' | 'communicatie-training' | 'teamdynamiek-training' | 'reintegratie' | 'iom-methode';
+type Page = 'home' | 'coaching' | 'teamtraining' | 'teamtraining-tweedaagse' | 'teamtraining-losse-sessie' | 'teamtraining-traject-op-maat' | 'leiderschap' | 'contact' | 'reviews' | 'about' | 'sales-training' | 'communicatie-training' | 'teamdynamiek-training' | 'reintegratie' | 'iom-methode';
 
 interface TileProps {
   id: Page;
@@ -197,6 +197,8 @@ export default function App() {
   const [isFilosofieOpen, setIsFilosofieOpen] = useState(false);
   const [isWaaromAndersOpen, setIsWaaromAndersOpen] = useState(false);
   const [isCoachingResultOpen, setIsCoachingResultOpen] = useState(false);
+  const [isLeiderschapCoachesOpen, setIsLeiderschapCoachesOpen] = useState(false);
+  const [isLeiderschapFaqOpen, setIsLeiderschapFaqOpen] = useState(false);
   const [activeElement, setActiveElement] = useState<string | null>(null);
   const [isShareOpen, setIsShareOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
@@ -341,7 +343,7 @@ export default function App() {
               <div className="grid grid-cols-2 gap-4">
                 <Tile id="coaching" icon={<Brain />} label="Coaching" onClick={navigateTo} />
                 <Tile id="teamtraining" icon={<Users />} label={t('Teamtraining', 'Team Training')} onClick={navigateTo} />
-                <Tile id="burnout" icon={<Flame />} label="Burn-out" onClick={navigateTo} />
+                <Tile id="leiderschap" icon={<Compass />} label={t('Leiderschap', 'Leadership')} onClick={navigateTo} />
                 <Tile id="reintegratie" icon={<RefreshCw />} label="Re-integratie" onClick={navigateTo} />
                 <Tile 
                   id="iom-methode"
@@ -1636,20 +1638,342 @@ export default function App() {
             </motion.div>
           )}
 
-          {currentPage === 'burnout' && (
-            <DetailPage 
-              key="burnout"
-              title="Burn-out"
-              subtitle={t("Altijd aan. Nooit echt uit.", "Always on. Never really off.")}
-              icon={<Flame />}
-              content={t(
-                "Gejaagd. Grenzen kwijt. Het gevoel dat je jezelf een beetje bent verloren. Bij DeTaalVan beginnen we bij het lichaam, want daar begint herstel echt. Van regulatie naar inzicht, van inzicht naar regie. Stap voor stap, afgestemd op jouw situatie.",
-                "Rushed. Lost boundaries. The feeling that you've lost yourself a bit. At DeTaalVan we start with the body, because that's where recovery really begins. From regulation to insight, from insight to control. Step by step, tailored to your situation."
-              )}
-              onBack={goBack}
-              ctaText={t('Meer info / Aanvragen', 'More info / Request')}
-              onCtaClick={() => navigateTo('contact')}
-            />
+          {currentPage === 'leiderschap' && (
+            <motion.div
+              key="leiderschap"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="page-transition bg-earth-bg z-10 p-6"
+            >
+              <button 
+                onClick={goBack}
+                className="flex items-center gap-2 text-earth-muted mb-8 hover:text-earth-accent transition-colors"
+              >
+                <ChevronLeft size={20} />
+                <span>Terug</span>
+              </button>
+
+              <div className="flex flex-col items-center text-center mb-10">
+                <div className="w-full rounded-2xl overflow-hidden shadow-sm mb-6">
+                  <img 
+                    src="/detaalvan-app/assets/aistudio/Coaching_DTV_en_OTBA_7027e0eb.png" 
+                    alt="DeTaalVan × OutsidetheBoks Academy Coaching" 
+                    className="w-full h-auto block"
+                  />
+                </div>
+                <p className="text-[10px] text-earth-muted/70 uppercase tracking-widest mb-2">
+                  DeTaalVan × OutsidetheBoks Academy
+                </p>
+                <h2 className="text-3xl font-serif text-earth-accent mb-2">
+                  {t("Leiderschap", "Leadership")}
+                </h2>
+                <p className="text-earth-muted text-sm italic max-w-[300px]">
+                  {t(
+                    "Coaching vanuit ervaren, voelen & doen. Van automatisch reageren naar bewust kiezen.",
+                    "Coaching through experiencing, feeling & doing. From automatic reacting to conscious choosing."
+                  )}
+                </p>
+              </div>
+
+              <div className="space-y-8 text-earth-ink mb-12">
+                <div className="px-2">
+                  <p className="text-sm text-earth-ink leading-relaxed text-center max-w-sm mx-auto">
+                    {t(
+                      "Je weet vaak best wat je anders wilt. In verschillende boksoefeningen voel je wat er in jou gebeurt als het spannend wordt. De IOM-methode maakt zichtbaar welk patroon jou daarin stuurt, zodat je kunt vertragen, ontwarren en weer bewust kiezen.",
+                      "You often know very well what you want to do differently. In various boxing exercises, you feel what happens inside you when things get tense. The IOM method reveals which pattern drives you, so you can slow down, untangle, and choose consciously again."
+                    )}
+                  </p>
+                </div>
+
+                {/* Thema's */}
+                <div className="space-y-3">
+                  <h3 className="font-serif text-earth-accent text-lg text-center">
+                    {t("Waar loop jij op vast?", "Where do you get stuck?")}
+                  </h3>
+                  <div className="grid grid-cols-2 gap-3">
+                    {[
+                      { nl: "Persoonlijk leiderschap", en: "Personal leadership" },
+                      { nl: "Grenzen & pleasen", en: "Boundaries & pleasing" },
+                      { nl: "Perfectionisme", en: "Perfectionism" },
+                      { nl: "Communicatie & conflicten", en: "Communication & conflict" },
+                      { nl: "Samenwerken met collega's", en: "Working with colleagues" },
+                      { nl: "Stress & druk", en: "Stress & pressure" },
+                      { nl: "Zelfvertrouwen", en: "Self-confidence" },
+                      { nl: "Werk-privébalans", en: "Work-life balance" }
+                    ].map((theme, idx) => (
+                      <div
+                        key={idx}
+                        className="bg-earth-card p-3.5 rounded-2xl shadow-sm border border-black/5 flex items-center justify-center text-center min-h-[64px]"
+                      >
+                        <span className="text-xs font-semibold text-earth-ink leading-tight uppercase tracking-wide">
+                          {t(theme.nl, theme.en)}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Zo werkt het: 3 bewegingen */}
+                <div className="space-y-4 pt-2">
+                  <div className="text-center space-y-1">
+                    <h3 className="font-serif text-earth-accent text-lg">
+                      {t("Drie bewegingen. Eén concrete verandering.", "Three movements. One concrete change.")}
+                    </h3>
+                    <p className="text-xs text-earth-muted italic">
+                      {t("Boksen maakt zichtbaar wat er in het moment gebeurt.", "Boxing makes visible what happens in the moment.")}
+                    </p>
+                  </div>
+
+                  <div className="bg-white p-5 rounded-2xl shadow-sm border border-black/5 text-center space-y-2">
+                    <h4 className="font-serif text-earth-accent text-lg">
+                      {t("1. Boksen — Ervaren", "1. Boxing — Experience")}
+                    </h4>
+                    <p className="text-sm text-earth-muted leading-relaxed">
+                      {t(
+                        "Verschillende boksvormen laten zien wat je doet bij druk, afstand, tempo en contact. Je voelt direct hoe je automatisch reageert. Presteren hoeft niet.",
+                        "Various boxing forms show what you do under pressure, distance, pace and contact. You immediately feel how you react automatically. No need to perform."
+                      )}
+                    </p>
+                  </div>
+
+                  <div className="bg-white p-5 rounded-2xl shadow-sm border border-black/5 text-center space-y-2">
+                    <h4 className="font-serif text-earth-accent text-lg">
+                      {t("2. Inzicht — Ontwarren", "2. Insight — Untangle")}
+                    </h4>
+                    <p className="text-sm text-earth-muted leading-relaxed">
+                      {t(
+                        "Met de IOM-methode brengen we gedachten, gevoelens, lichamelijke signalen en gedrag overzichtelijk in kaart. Je ziet wanneer je automatisch reageert en wanneer je bewust kunt kiezen.",
+                        "With the IOM method we clearly map thoughts, feelings, physical signals and behavior. You see when you react automatically and when you can choose consciously."
+                      )}
+                    </p>
+                  </div>
+
+                  <div className="bg-white p-5 rounded-2xl shadow-sm border border-black/5 text-center space-y-2">
+                    <h4 className="font-serif text-earth-accent text-lg">
+                      {t("3. Praktijk — Regie nemen", "3. Practice — Take control")}
+                    </h4>
+                    <p className="text-sm text-earth-muted leading-relaxed">
+                      {t(
+                        "Je oefent met vertragen, begrenzen, uitspreken of juist handelen. Vanaf de eerste sessie krijg je praktische handvatten die je direct kunt toepassen in je werk en dagelijks leven.",
+                        "You practice slowing down, setting boundaries, speaking up or taking action. From the first session you receive practical tools you can apply immediately in work and daily life."
+                      )}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Inklapbaar: Twee coaches, één aanpak */}
+                <div className="w-full">
+                  <button
+                    onClick={() => setIsLeiderschapCoachesOpen(!isLeiderschapCoachesOpen)}
+                    className="flex items-center justify-between w-full py-4 border-b border-black/5"
+                  >
+                    <span className="font-serif text-earth-accent text-lg text-left">
+                      {t("Twee coaches, één aanpak", "Two coaches, one approach")}
+                    </span>
+                    <ChevronDown 
+                      size={20} 
+                      className={`text-earth-muted transition-transform duration-300 shrink-0 ${isLeiderschapCoachesOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+                  
+                  {isLeiderschapCoachesOpen && (
+                    <div className="pt-4 pb-2 space-y-4 text-sm text-earth-muted leading-relaxed">
+                      <p className="italic text-center text-earth-ink">
+                        {t(
+                          "Je lijf laat zien wat er gebeurt. Je innerlijke dialoog laat zien waarom.",
+                          "Your body shows what happens. Your inner dialogue shows why."
+                        )}
+                      </p>
+                      <div className="bg-white p-4 rounded-2xl border border-black/5 space-y-1">
+                        <p className="font-semibold text-earth-accent">Sjoerd Kersten · DeTaalVan (IOM-methode)</p>
+                        <p className="text-xs leading-relaxed">
+                          {t(
+                            "Helpt je jouw innerlijke dialoog en automatische patronen te herkennen en vertaalt de ervaring naar bewuste regie in het dagelijks leven. Psychomotorisch therapeut met jarenlange ervaring in de ziekenhuispsychiatrie.",
+                            "Helps you recognize your inner dialogue and automatic patterns and translates the experience into conscious control in daily life. Psychomotor therapist with years of experience in hospital psychiatry."
+                          )}
+                        </p>
+                      </div>
+                      <div className="bg-white p-4 rounded-2xl border border-black/5 space-y-1">
+                        <p className="font-semibold text-earth-accent">Marvin Levant · Outside the Boks Academy</p>
+                        <p className="text-xs leading-relaxed">
+                          {t(
+                            "Maakt gedrag zichtbaar met boksvormen, timing, observatie en actie-reactie. Direct, veilig en afgestemd op wat jij aankunt. Voormalig leidinggevende bij een internationaal bedrijf en bokscoach.",
+                            "Makes behavior visible through boxing forms, timing, observation and action-reaction. Direct, safe and tailored to what you can handle. Former manager at an international company and boxing coach."
+                          )}
+                        </p>
+                      </div>
+                      <p className="text-xs italic text-center">
+                        {t(
+                          "Je hoeft niet sportief te zijn: boksen is hier een manier om te ervaren wat er gebeurt. Er is geen wedstrijd en je hoeft geen conditie op te bouwen.",
+                          "You don't need to be athletic: boxing here is a way to experience what happens. There is no match and you don't need to build stamina."
+                        )}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Wat levert het op? (altijd zichtbaar) */}
+                <div className="space-y-4">
+                  <h3 className="font-serif text-earth-accent text-lg text-center">
+                    {t("Wat levert het op?", "What does it yield?")}
+                  </h3>
+
+                  <div className="space-y-3 px-1">
+                    {[
+                      {
+                        title: { nl: "Meer rust onder druk", en: "More calm under pressure" },
+                        desc: { nl: "Spanning eerder herkennen en ruimte maken.", en: "Recognize tension earlier and create space." }
+                      },
+                      {
+                        title: { nl: "Duidelijkere grenzen", en: "Clearer boundaries" },
+                        desc: { nl: "Nee zeggen zonder jezelf kwijt te raken.", en: "Saying no without losing yourself." }
+                      },
+                      {
+                        title: { nl: "Meer zelfvertrouwen", en: "More self-confidence" },
+                        desc: { nl: "Erop vertrouwen dat je om kunt gaan met wat er op je afkomt.", en: "Trusting that you can handle whatever comes your way." }
+                      },
+                      {
+                        title: { nl: "Duurzamere veerkracht", en: "Sustainable resilience" },
+                        desc: { nl: "Vertragen, aanpassen en steun toelaten.", en: "Slowing down, adapting and allowing support." }
+                      }
+                    ].map((item, idx) => (
+                      <div key={idx} className="space-y-0.5">
+                        <div className="flex items-start gap-2">
+                          <span className="text-earth-accent shrink-0 mt-0.5">•</span>
+                          <p className="text-sm font-medium text-earth-ink">{t(item.title.nl, item.title.en)}</p>
+                        </div>
+                        <p className="text-xs text-earth-muted pl-4 italic">{t(item.desc.nl, item.desc.en)}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Inhoud van het traject (altijd zichtbaar) */}
+                <div className="bg-white p-5 rounded-2xl shadow-sm border border-black/5 space-y-3">
+                  <h3 className="font-serif text-earth-accent text-lg text-center">
+                    {t("Inhoud van het traject", "What's included in the program")}
+                  </h3>
+                  <ul className="space-y-2 text-sm text-earth-muted leading-relaxed">
+                    <li className="flex items-start gap-2">
+                      <span className="text-earth-accent shrink-0">•</span>
+                      <span>{t("Vier maanden begeleiding door twee coaches (Sjoerd & Marvin)", "Four months of guidance by two coaches (Sjoerd & Marvin)")}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-earth-accent shrink-0">•</span>
+                      <span>{t("Zes sessies van 60 tot 90 minuten", "Six sessions of 60 to 90 minutes")}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-earth-accent shrink-0">•</span>
+                      <span>{t("Ervaringsgerichte oefeningen en boksen", "Experiential exercises and boxing")}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-earth-accent shrink-0">•</span>
+                      <span>{t("Je persoonlijke IOM op papier & toegang tot de online IOM-omgeving", "Your personal IOM on paper & access to the online IOM environment")}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-earth-accent shrink-0">•</span>
+                      <span>{t("Videoanalyse (alleen met jouw toestemming) & vertaling naar je dagelijkse praktijk", "Video analysis (only with your permission) & translation to daily practice")}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-earth-accent shrink-0">•</span>
+                      <span>{t("Contact tussen de sessies via WhatsApp, telefoon of beeldbellen", "Contact between sessions via WhatsApp, phone or video call")}</span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Investering */}
+                <div className="px-2 pt-2">
+                  <div className="w-full space-y-3">
+                    <h3 className="font-serif text-earth-accent text-lg text-center w-full mb-4">
+                      {t("Investering", "Investment")}
+                    </h3>
+                    
+                    <div className="flex justify-between gap-4 border-b border-black/5 pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider shrink-0">{t("TRAJECT", "PROGRAM")}</span>
+                      <span className="text-sm text-earth-ink font-medium text-right">
+                        {t("4 maanden · 6 sessies (60–90 min)", "4 months · 6 sessions (60–90 min)")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between gap-4 border-b border-black/5 pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider shrink-0">{t("TRAJECTPRIJS", "PROGRAM FEE")}</span>
+                      <span className="text-sm text-earth-ink font-medium text-right">
+                        {t("€ 3.000 excl. btw (€ 3.630 incl.)", "€ 3,000 excl. VAT (€ 3,630 incl.)")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between gap-4 border-b border-black/5 pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider shrink-0">{t("LOSSE SESSIE", "SINGLE SESSION")}</span>
+                      <span className="text-sm text-earth-ink font-medium text-right">
+                        {t("€ 500 excl. btw (€ 605 incl.)", "€ 500 excl. VAT (€ 605 incl.)")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between gap-4 border-b border-black/5 pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider shrink-0">{t("LOCATIE", "LOCATION")}</span>
+                      <span className="text-sm text-earth-ink font-medium text-right">
+                        {t("Stijger 24, Almere Haven of op locatie", "Stijger 24, Almere Haven or on-site")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between gap-4 pb-3">
+                      <span className="text-xs text-earth-muted uppercase tracking-wider shrink-0">{t("KENNISMAKING", "INTRO")}</span>
+                      <span className="text-sm text-earth-ink font-medium text-right">
+                        {t("Kosteloos & vrijblijvend telefonisch", "Free & non-binding phone call")}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Inklapbaar: Veelgestelde vragen */}
+                <div className="w-full">
+                  <button
+                    onClick={() => setIsLeiderschapFaqOpen(!isLeiderschapFaqOpen)}
+                    className="flex items-center justify-between w-full py-4 border-b border-black/5"
+                  >
+                    <span className="font-serif text-earth-accent text-lg text-left">
+                      {t("Goed om te weten (FAQ)", "Good to know (FAQ)")}
+                    </span>
+                    <ChevronDown 
+                      size={20} 
+                      className={`text-earth-muted transition-transform duration-300 shrink-0 ${isLeiderschapFaqOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+
+                  {isLeiderschapFaqOpen && (
+                    <div className="pt-4 pb-2 space-y-4 text-xs text-earth-muted leading-relaxed">
+                      <div>
+                        <p className="font-semibold text-earth-ink mb-1">{t("Moet ik kunnen boksen?", "Do I need to know how to box?")}</p>
+                        <p>{t("Nee. De boksvormen worden aangepast aan jouw belastbaarheid en niveau. Het gaat om wat je in het moment opmerkt. Techniek en conditie spelen geen rol.", "No. The boxing forms are adapted to your capacity and level. It's about what you notice in the moment. Technique and fitness play no role.")}</p>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-earth-ink mb-1">{t("Zijn jullie er allebei bij?", "Are you both present?")}</p>
+                        <p>{t("De intake is meestal met Sjoerd. Heb je recent een coaching- of therapietraject gevolgd, dan sluit Marvin vaak direct aan. Alle sessies daarna doen we samen.", "The intake is usually with Sjoerd. If you recently completed a coaching or therapy program, Marvin often joins right away. All sessions after that are done together.")}</p>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-earth-ink mb-1">{t("Worden er video-opnamen gemaakt?", "Are video recordings made?")}</p>
+                        <p>{t("Alleen wanneer terugkijken meerwaarde heeft en jij daar vooraf uitdrukkelijk mee instemt.", "Only when reviewing adds value and you explicitly consent beforehand.")}</p>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-earth-ink mb-1">{t("Kan mijn werkgever dit traject betalen?", "Can my employer pay for this program?")}</p>
+                        <p>{t("Ja, als je werkgever daarmee instemt maken we een voorstel op naam van je werkgever. Inhoudelijke gesprekken blijven altijd vertrouwelijk.", "Yes, if your employer agrees we prepare a proposal in your employer's name. Session content always remains confidential.")}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex justify-center">
+                <button 
+                  onClick={() => navigateTo('contact')}
+                  className="w-full max-w-xs bg-earth-primary text-white px-6 py-4 rounded-full font-medium text-center shadow-lg hover:shadow-xl transition-all active:scale-95"
+                >
+                  {t('Vraag een kennismaking aan', 'Request an introduction')}
+                </button>
+              </div>
+            </motion.div>
           )}
 
           {currentPage === 'reviews' && (
@@ -1938,8 +2262,8 @@ export default function App() {
               key="about"
               title={t('Over Sjoerd Kersten', 'About Sjoerd Kersten')}
               subtitle={t('Specialist in de IOM-methode, je innerlijke dialoog en regie.', 'Specialist in the IOM method, your inner dialogue and control.')}
-              imageUrl="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=13;908;2891;841,width=960,height=1280/image/404499409/3473e8e5-c864-4275-804c-e3514e40ced0.jpg"
-              imageStyle={{ objectPosition: 'center 5%' }}
+              imageUrl="/detaalvan-app/assets/aistudio/Foto_website_f00dcbbb.png"
+              imageStyle={{ objectPosition: 'center 20%' }}
               content={t(
                 "Sjoerd Kersten is psychomotorisch therapeut, coach en trainer met duizenden uren ervaring. Hij werkt met professionals, teams en organisaties aan één centrale vraag: wie stuurt jou, en wanneer stuur jij zelf?\n\nMet een achtergrond in de ziekenhuis psychiatrie en 8 jaar ervaring als ondernemer combineert Sjoerd Kersten psychomotorische therapie, biofeedback en de IOM-methode tot een aanpak die lichaam, hoofd en hart samenbrengt. Direct, holistisch en gericht op blijvende verandering.",
                 "Sjoerd Kersten is a psychomotor therapist, coach and trainer with thousands of hours of experience. He works with professionals, teams and organizations on one central question: who directs you, and when do you direct yourself?\n\nWith a background in hospital psychiatry and 8 years of experience as an entrepreneur, Sjoerd Kersten combines psychomotor therapy, biofeedback and the IOM method into an approach that brings body, head and heart together. Direct, holistic and focused on lasting change."
