@@ -329,9 +329,9 @@ export default function App() {
               className="space-y-8"
             >
               <img 
-                src="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=0;0;0;0,width=925,height=1280/image/543441179/b4f07c42-4aaa-49f0-ba2d-a75ee12d6227.png" 
+                src="/detaalvan-app/assets/aistudio/Foto_website_f00dcbbb.png" 
                 alt="Sjoerd Kersten" 
-                className="w-full h-auto max-h-[320px] object-contain bg-[#F5F0EB] rounded-2xl shadow-sm"
+                className="w-full h-[320px] object-cover object-[50%_20%] rounded-2xl shadow-sm"
                 referrerPolicy="no-referrer"
               />
               <div className="text-center">
